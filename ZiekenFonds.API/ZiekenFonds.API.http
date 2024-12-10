@@ -1,0 +1,6 @@
+@ZiekenFonds.API_HostAddress = http://localhost:5168
+
+GET {{ZiekenFonds.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
