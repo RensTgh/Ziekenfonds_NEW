@@ -1,0 +1,60 @@
+﻿@model ZiekenFonds.Web.DTOS.Opleiding.OpleidingOphalenDto[]
+
+<div class="text-center">
+    <h1 class="display-4">Opleiding Pagina</h1>
+
+    <!-- Create Opleiding Button -->
+    <div class="mb-3">
+        <a asp-action="Create" class="btn btn-success">Create Opleiding</a>
+    </div>
+
+    <!-- Add message displays -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Beschrijving</th>
+                    <th>Begindatum</th>
+                    <th>Einddatum</th>
+                    <th>Aantal Plaatsen</th>
+                    <th>Inschrijven</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var opleiding in Model)
+                {
+                    <tr id="opleiding_@opleiding.Id">
+                        <td>@Html.DisplayFor(modelItem => opleiding.Naam)</td>
+                        <td>@Html.DisplayFor(modelItem => opleiding.Beschrijving)</td>
+                        <td>@opleiding.Begindatum.ToString("dd-MM-yyyy")</td>
+                        <td>@opleiding.Einddatum.ToString("dd-MM-yyyy")</td>
+                        <td>@Html.DisplayFor(modelItem => opleiding.AantalPlaatsen)</td>
+                        <td><button class="btn btn-primary">Inschrijven</button></td>
+                        <td>
+                            <!-- Delete Form -->
+                            <form method="post" asp-action="Delete" asp-route-id="@opleiding.Id" onsubmit="return confirm('Ben je zeker dat je deze opleiding wilt verwijderen?')">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
