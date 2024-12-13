@@ -1,4 +1,5 @@
 using ZiekenFonds.Web.Services;
+using ZiekenFonds.Web.Services.Opleiding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ builder.Services.AddControllersWithViews();
 
 // Register Services here
 builder.Services.AddScoped<IActiviteitenService, ActiviteitenService>();
+builder.Services.AddScoped<IOpleidingServices, OpleidingService>();
 
 var app = builder.Build();
 

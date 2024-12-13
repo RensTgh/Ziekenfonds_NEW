@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using Ziekenfonds.MVC.DTOS;
@@ -10,7 +9,6 @@ namespace ZiekenFonds.Web.Services
     {
         // Service moet de locatie van de api kennen
         private string apiUrl = "https://localhost:7027/api/Activiteit";
-
 
         public async Task<ActiveitenDTO[]> GetAllActiviteitenAsync()
         {
@@ -25,7 +23,6 @@ namespace ZiekenFonds.Web.Services
                     string responseData = await response.Content.ReadAsStringAsync();
 
                     // TODO
-
                 }
 
                 return null;
@@ -52,7 +49,5 @@ namespace ZiekenFonds.Web.Services
                 return null;
             }
         }
-
-
     }
 }
