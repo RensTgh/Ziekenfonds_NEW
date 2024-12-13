@@ -1,4 +1,5 @@
 using ZiekenFonds.Web.Services;
+using ZiekenFonds.Web.Services.Monitor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,9 @@ builder.Services.AddControllersWithViews();
 
 // Register Services here
 builder.Services.AddScoped<IActiviteitenService, ActiviteitenService>();
+// In Startup.cs -> ConfigureServices method
+builder.Services.AddScoped<IMonitorService, MonitorService>();
+
 
 var app = builder.Build();
 
