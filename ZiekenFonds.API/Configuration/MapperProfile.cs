@@ -53,6 +53,7 @@ namespace ZiekenFonds.API.Configuration
             //Monitor mappings
             CreateMap<Monitor, GetMonitorDto>()
                 .ForMember(dest => dest.Naam, x => x.MapFrom(src => src.Persoon.Naam))
+                .ForMember(dest => dest.Leeftijd, opt => opt.MapFrom(src => DateTime.Now.Year - src.Persoon!.Geboortedatum.Year))
                 .ForMember(dest => dest.Voornaam, x => x.MapFrom(src => src.Persoon.Voornaam))
                 .ForMember(dest => dest.Email, x => x.MapFrom(src => src.Persoon.Email))
                 .ForMember(dest => dest.Telefoonnummer, x => x.MapFrom(src => src.Persoon.TelefoonNummer));
