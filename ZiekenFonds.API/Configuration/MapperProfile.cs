@@ -8,6 +8,7 @@ using ZiekenFonds.API.Dto.Groepsreis;
 using ZiekenFonds.API.Dto.Onkosten;
 using ZiekenFonds.API.Dto.Kind;
 using ZiekenFonds.API.Models;
+using ZiekenFonds.API.Dto.Gebruiker;
 
 namespace ZiekenFonds.API.Configuration
 {
@@ -104,6 +105,10 @@ namespace ZiekenFonds.API.Configuration
             CreateMap<UpdateKind, Kind>()
                 .ForMember(dest => dest.Allergieën, opt => opt.MapFrom(src => src.Allergieën ?? "Geen"))
                 .ForMember(dest => dest.Medicatie, opt => opt.MapFrom(src => src.Medicatie ?? "Geen"));
+
+            //Gebruiker 
+            CreateMap<RegistratieDto, CustomUser>();
+            CreateMap<LoginDto, CustomUser>();
         }
     }
 }
