@@ -8,12 +8,10 @@ namespace Ziekenfonds.MVC.Controllers
 {
     public class ActiviteitenController : Controller
     {
-        private readonly ILogger<ActiviteitenController> _logger;
         private readonly IActiviteitenService _service;
 
-        public ActiviteitenController(ILogger<ActiviteitenController> logger, IActiviteitenService service)
+        public ActiviteitenController(IActiviteitenService service)
         {
-            _logger = logger;
             _service = service;
         }
 
@@ -24,10 +22,5 @@ namespace Ziekenfonds.MVC.Controllers
             return View(activeitenDTO);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

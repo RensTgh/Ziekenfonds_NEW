@@ -58,10 +58,10 @@ namespace ZiekenFonds.API.Configuration
                 .ForMember(dest => dest.Email, x => x.MapFrom(src => src.Persoon.Email))
                 .ForMember(dest => dest.Telefoonnummer, x => x.MapFrom(src => src.Persoon.TelefoonNummer));
 
-            CreateMap<Monitor, GetMonitorDetailsDto>()
-                .ForMember(dest => dest.Naam, opt => opt.MapFrom(src => $"{src.Persoon.Naam} {src.Persoon.Voornaam}"))
-                .ForMember(dest => dest.Bestemmingen, opt => opt.MapFrom(src => new List<string> { src.Groepsreis.Bestemming.Naam }))
-                .ForMember(dest => dest.Opleidingen, opt => opt.MapFrom(src => src.Persoon.OpleidingenPersonen.Select(o => o.Opleiding.Naam).ToList()));
+            //CreateMap<Monitor, GetMonitorDetailsDto>()
+            //    .ForMember(dest => dest.Naam, opt => opt.MapFrom(src => $"{src.Persoon.Naam} {src.Persoon.Voornaam}"))
+            //    .ForMember(dest => dest.Bestemmingen, opt => opt.MapFrom(src => new List<string> { src.Groepsreis.Bestemming.Naam }))
+            //    .ForMember(dest => dest.Opleidingen, opt => opt.MapFrom(src => src.Persoon.OpleidingenPersonen.Select(o => o.Opleiding.Naam).ToList()));
 
             CreateMap<CreateMonitorDto, Monitor>();
             CreateMap<UpdateMonitorDto, Monitor>();

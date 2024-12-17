@@ -36,7 +36,7 @@ namespace ZiekenFonds.Web.Services.Monitor
                     // API geven data bijna altijd in JSON formaat  AKA een string
                     string responseData = await response.Content.ReadAsStringAsync();
 
-                    MonitorGegevensDTO[] dto = JsonConvert.DeserializeObject<MonitorGegevensDTO[]>(responseData);
+                    MonitorGegevensDTO[]? dto = JsonConvert.DeserializeObject<MonitorGegevensDTO[]>(responseData);
                     return dto;
                 }
 
