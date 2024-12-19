@@ -12,6 +12,6 @@ namespace ZiekenFonds.Web.Services.Opleiding
 
         Task<OpleidingMonitorPageDto[]> GetAllMonitorsAsync();
 
-        Task InschrijvenAsync(int opleidingId, string persoonId);
+        Task InschrijvenAsync(OpleidingPersoonInschrijvingDto inschrijving);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ZiekenFonds.Web.DTOS.Opleiding
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ZiekenFonds.Web.DTOS.Opleiding
 {
     public class OpleidingOphalenDto
     {
@@ -14,7 +16,8 @@
 
         public int AantalPlaatsen { get; set; }
 
-        public List<OpleidingMonitorPageDto>? AllMonitors { get; set; } = new List<OpleidingMonitorPageDto>();
+        public int MonitorID { get; set; } // Geselecteerde monitor
 
+        public List<SelectListItem> AlleMonitors { get; set; }
     }
 }

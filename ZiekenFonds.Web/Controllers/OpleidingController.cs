@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using ZiekenFonds.Web.DTOS.Opleiding;
 using ZiekenFonds.Web.Models;
@@ -95,7 +96,7 @@ namespace ZiekenFonds.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             try
             {
@@ -105,12 +106,14 @@ namespace ZiekenFonds.Web.Controllers
                 // Fetch all monitors
                 OpleidingMonitorPageDto[] allMonitors = await _service.GetAllMonitorsAsync();
 
-                if (allMonitors != null)
+                // TODO
+                foreach (var opleiding in opleidingen)
                 {
-                    foreach (var opleiding in opleidingen)
+                    opleiding.AlleMonitors = allMonitors.Select(k => new SelectListItem
                     {
-                        opleiding.AllMonitors = allMonitors.ToList();
-                    }
+                        Value = k.Id.ToString(),
+                        Text = $"{k.Naam} {k.Voornaam}",
+                    }).ToList();
                 }
 
                 return View(opleidingen);
@@ -123,6 +126,7 @@ namespace ZiekenFonds.Web.Controllers
                 return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
         }
+
         [HttpPost]
         public async Task<IActionResult> Inschrijven(int opleidingId, string persoonId)
         {
@@ -134,7 +138,13 @@ namespace ZiekenFonds.Web.Controllers
 
             try
             {
-                await _service.InschrijvenAsync(opleidingId, persoonId);
+                OpleidingPersoonInschrijvingDto inschrijving = new OpleidingPersoonInschrijvingDto
+                {
+                    OpleidingId = opleidingId,
+                    PersoonId = persoonId
+                };
+
+                await _service.InschrijvenAsync(inschrijving);
                 TempData["SuccessMessage"] = "Succesvol ingeschreven.";
             }
             catch (Exception ex)

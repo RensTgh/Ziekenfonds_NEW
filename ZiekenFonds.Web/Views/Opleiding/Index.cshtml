@@ -24,8 +24,9 @@
                     <th>Begindatum</th>
                     <th>Einddatum</th>
                     <th>Aantal Plaatsen</th>
-                    <th>Inschrijven</th>
+                    <th>Monitor</th>
                     <th>Acties</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -38,30 +39,16 @@
                         <td>@opleiding.Einddatum.ToString("dd-MM-yyyy")</td>
                         <td>@Html.DisplayFor(modelItem => opleiding.AantalPlaatsen)</td>
                         <td>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button"
-                                        id="dropdownMenuButton_@opleiding.Id" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Kies een Monitor
+                            <form method="post" asp-controller="Opleiding" asp-action="Inschrijven">
+                                <input type="hidden" name="opleidingId" value="@opleiding.Id" />
+                                <select name="persoonId" class="form-control" asp-items="@opleiding.AlleMonitors">
+                                    <option value="">-- Selecteer Monitor --</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary mt-2">
+                                    <i class="bi bi-person-plus"></i> Inschrijven
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@opleiding.Id">
-                                    @foreach (var monitor in opleiding.AllMonitors)
-                                    {
-
-
-
-                                       @*  <li>
-                                            <form method="post" asp-controller="Opleiding" asp-action="Inschrijven" asp-route-monitorId="@monitor.Id" asp-route-persoonId="@monitor.PersoonId">
-                                                @Html.AntiForgeryToken()
-                                                <input type="hidden" name="OpleidingId" value="@opleiding.Id" />
-                                                <input type="hidden" name="PersoonId" value="@monitor.PersoonId" />
-                                                <button type="submit" class="dropdown-item">Schrijf @monitor.PersoonId in</button>
-                                            </form>
-                                        </li> *@
-                                    }
-                                </ul>
-                            </div>
+                            </form>
                         </td>
-
                         <td>
                             <form method="post" asp-action="Delete" asp-route-id="@opleiding.Id"
                                   onsubmit="return confirm('Ben je zeker dat je deze opleiding wilt verwijderen?')">

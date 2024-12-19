@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System.Net.Http;
 using System.Text;
 using ZiekenFonds.Web.DTOS.Opleiding;
 
@@ -67,7 +69,7 @@ namespace ZiekenFonds.Web.Services.Opleiding
             // Alle communicatie via API's verloopt via een Http Client
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync($"{apiMonitorUrl}");
+                HttpResponseMessage response = await client.GetAsync($"{apiMonitorUrl}/MonitorsMetNaam");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -83,33 +85,18 @@ namespace ZiekenFonds.Web.Services.Opleiding
             }
         }
 
-        public async Task InschrijvenAsync(int opleidingId, string persoonId)
+        public async Task InschrijvenAsync(OpleidingPersoonInschrijvingDto inschrijving)
         {
-            // Validate input
-            if (opleidingId <= 0 || string.IsNullOrEmpty(persoonId))
-            {
-                throw new ArgumentException("OpleidingId and PersoonId are required.");
-            }
-
-            // Prepare DTO
-            var inschrijvenDto = new
-            {
-                OpleidingId = opleidingId,
-                PersoonId = persoonId
-            };
-
             using (HttpClient client = new HttpClient())
             {
-                string jsonContent = JsonConvert.SerializeObject(inschrijvenDto);
-                HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync($"{baseUrl}/Inschrijven", httpContent);
-
+                var response = await client.PostAsJsonAsync($"{baseUrl}/Inschrijven", inschrijving);
                 if (!response.IsSuccessStatusCode)
                 {
-                    string errorMessage = await response.Content.ReadAsStringAsync();
-                    throw new HttpRequestException($"Error during Inschrijven (Status {response.StatusCode}): {errorMessage}");
+                    var error = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Failed to register: {error}");
                 }
             }
+
         }
     }
 }

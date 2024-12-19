@@ -2,11 +2,13 @@
 {
     public class OpleidingMonitorPageDto
     {
-        public int Id { get; set; }
-        public string PersoonId { get; set; }  
-        public int GroepsreisId { get; set; }
-        public bool IsHoofdMonitor { get; set; }
-        public object Persoon { get; set; }  
-        public object Groepsreis { get; set; }  
+        public string Id { get; set; }
+        public string PersoonId { get; set; }
+        public string Naam { get; set; }
+        public string Voornaam { get; set; }
+        public int Leeftijd { get; set; }
+        public string Email { get; set; }
+        public string Telefoonnummer { get; set; }
+
     }
 }
