@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -12,6 +11,7 @@ namespace ZiekenFonds.Web.Services
     {
         // Service moet de locatie van de api kennen
         private string apiUrl = "https://localhost:7027/api/Activiteit";
+
 
         private string apiUrlDelete = "https://localhost:7027/api/Activiteit/{url}";
 
@@ -29,9 +29,11 @@ namespace ZiekenFonds.Web.Services
                     string responseData = await response.Content.ReadAsStringAsync();
 
                     // TODO
+
                     ActiviteitenDTO[] dto = JsonConvert.DeserializeObject<ActiviteitenDTO[]>(responseData);
 
                     return dto;
+
 
                 }
 
@@ -59,6 +61,7 @@ namespace ZiekenFonds.Web.Services
                 return null;
             }
         }
+
 
         // nieuw
         public async Task CreateActiviteitAsync(CreateActiviteitDTO dto)
@@ -91,5 +94,6 @@ namespace ZiekenFonds.Web.Services
                 }
             }
         }
+
     }
 }

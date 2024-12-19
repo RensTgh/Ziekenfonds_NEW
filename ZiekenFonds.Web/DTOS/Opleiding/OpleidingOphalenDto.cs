@@ -1,6 +1,6 @@
-﻿namespace ZiekenFonds.API.Dto.Opleiding
+﻿namespace ZiekenFonds.Web.DTOS.Opleiding
 {
-    public class OpleidingWithPersonenDto
+    public class OpleidingOphalenDto
     {
         public int Id { get; set; }
 
@@ -13,8 +13,5 @@
         public DateTime Einddatum { get; set; }
 
         public int AantalPlaatsen { get; set; }
-
-        public List<OpleidingPersoonDto> OpleidingenPersonen { get; set; }
-        public List<VoorOpleidingDto> VereisteOpleidingen { get; set; }
     }
 }

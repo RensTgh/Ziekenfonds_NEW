@@ -11,5 +11,6 @@ namespace ZiekenFonds.Web.Services
         Task CreateActiviteitAsync(CreateActiviteitDTO dto);
 
         Task DeleteActivityAsync(int id);
+
     }
 }

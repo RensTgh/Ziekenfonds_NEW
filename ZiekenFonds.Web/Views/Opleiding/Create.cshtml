@@ -1,0 +1,71 @@
+﻿@model ZiekenFonds.Web.DTOS.Opleiding.CreateOpleidingPageDto
+
+@{
+    ViewData["Title"] = "Create Opleiding";
+}
+
+<div class="container">
+    <h1>Create Opleiding</h1>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Naam">Naam</label>
+            <input type="text" id="Naam" name="Naam" class="form-control" required value="@Model?.Naam" />
+            @Html.ValidationMessageFor(model => model.Naam, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="Beschrijving">Beschrijving</label>
+            <textarea id="Beschrijving" name="Beschrijving" class="form-control" required>@Model?.Beschrijving</textarea>
+            @Html.ValidationMessageFor(model => model.Beschrijving, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="Begindatum">Begindatum</label>
+            <input type="date" id="Begindatum" name="Begindatum" class="form-control" required value="@Model?.Begindatum.ToString("yyyy-MM-dd")" />
+            @Html.ValidationMessageFor(model => model.Begindatum, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="Einddatum">Einddatum</label>
+            <input type="date" id="Einddatum" name="Einddatum" class="form-control" required value="@Model?.Einddatum.ToString("yyyy-MM-dd")" />
+            @Html.ValidationMessageFor(model => model.Einddatum, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="AantalPlaatsen">Aantal Plaatsen</label>
+            <input type="number" id="AantalPlaatsen" name="AantalPlaatsen" class="form-control" required value="@Model?.AantalPlaatsen" />
+            @Html.ValidationMessageFor(model => model.AantalPlaatsen, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="form-group">
+            <label for="VereisteOpleidingIds">Vereiste Opleidingen</label>
+            <div id="VereisteOpleidingIds">
+                @foreach (var opleiding in Model.AllOpleidingen)
+                {
+                    <div class="form-check">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="opleiding_@opleiding.Id"
+                               name="VereisteOpleidingIds"
+                               value="@opleiding.Id"
+                        @(Model.VereisteOpleidingIds?.Contains(opleiding.Id) == true ? "checked" : "") />
+                        <label class="form-check-label" for="opleiding_@opleiding.Id">
+                            @opleiding.Naam
+                        </label>
+                    </div>
+                }
+            </div>
+            @Html.ValidationMessageFor(model => model.VereisteOpleidingIds, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="OpleidingenPersonen">Opleiding Personen</label>
+            <textarea id="OpleidingenPersonen" name="OpleidingenPersonen" class="form-control" placeholder="JSON format or further customization required"></textarea>
+            @Html.ValidationMessageFor(model => model.OpleidingenPersonen, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,33 @@
+﻿@model ZiekenFonds.Web.DTOS.Monitor.MonitorGegevensDTO[]
+
+@{
+    ViewData["Title"] = "Monitoren";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center display-4">Monitorlijst</h1>
+    <p class="text-center">De details van alle monitors:</p>
+
+    @if (Model == null || !Model.Any())
+    {
+        <p class="text-center">Er zijn geen monitorgegevens beschikbaar.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var monitor in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@monitor.Voornaam @monitor.Naam</h5>
+                            <p class="card-text"><strong>Leeftijd:</strong> @monitor.Leeftijd jaar</p>
+                            <p class="card-text"><strong>Email:</strong> <a href="mailto:@monitor.Email">@monitor.Email</a></p>
+                            <p class="card-text"><strong>Telefoonnummer:</strong> @monitor.Telefoonnummer</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

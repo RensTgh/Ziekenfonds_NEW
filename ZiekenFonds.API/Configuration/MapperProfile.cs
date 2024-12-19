@@ -8,6 +8,7 @@ using ZiekenFonds.API.Dto.Groepsreis;
 using ZiekenFonds.API.Dto.Onkosten;
 using ZiekenFonds.API.Dto.Kind;
 using ZiekenFonds.API.Models;
+using ZiekenFonds.API.Dto.Gebruiker;
 
 namespace ZiekenFonds.API.Configuration
 {
@@ -53,6 +54,7 @@ namespace ZiekenFonds.API.Configuration
             //Monitor mappings
             CreateMap<Monitor, GetMonitorDto>()
                 .ForMember(dest => dest.Naam, x => x.MapFrom(src => src.Persoon.Naam))
+                .ForMember(dest => dest.Leeftijd, opt => opt.MapFrom(src => DateTime.Now.Year - src.Persoon!.Geboortedatum.Year))
                 .ForMember(dest => dest.Voornaam, x => x.MapFrom(src => src.Persoon.Voornaam))
                 .ForMember(dest => dest.Email, x => x.MapFrom(src => src.Persoon.Email))
                 .ForMember(dest => dest.Telefoonnummer, x => x.MapFrom(src => src.Persoon.TelefoonNummer));
@@ -104,6 +106,10 @@ namespace ZiekenFonds.API.Configuration
             CreateMap<UpdateKind, Kind>()
                 .ForMember(dest => dest.Allergieën, opt => opt.MapFrom(src => src.Allergieën ?? "Geen"))
                 .ForMember(dest => dest.Medicatie, opt => opt.MapFrom(src => src.Medicatie ?? "Geen"));
+
+            //Gebruiker 
+            CreateMap<RegistratieDto, CustomUser>();
+            CreateMap<LoginDto, CustomUser>();
         }
     }
 }
