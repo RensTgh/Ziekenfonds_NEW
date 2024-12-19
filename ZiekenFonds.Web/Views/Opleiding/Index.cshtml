@@ -3,26 +3,19 @@
 <div class="text-center">
     <h1 class="display-4">Opleiding Pagina</h1>
 
-    <!-- Create Opleiding Button -->
     <div class="mb-3">
         <a asp-action="Create" class="btn btn-success">Create Opleiding</a>
     </div>
 
-    <!-- Add message displays -->
-    @if (TempData["SuccessMessage"] != null)
+    <!-- Message Display -->
+    @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null || TempData["ErrorEditMessage"] != null)
     {
         <div class="alert alert-success">
-            @TempData["SuccessMessage"]
-        </div>
-    }
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger">
-            @TempData["ErrorMessage"]
+            @TempData["SuccessMessage"] ?? @TempData["ErrorMessage"] ?? @TempData["ErrorEditMessage"]
         </div>
     }
 
-    <div>
+    <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
@@ -38,16 +31,40 @@
             <tbody>
                 @foreach (var opleiding in Model)
                 {
-                    <tr id="opleiding_@opleiding.Id">
+                    <tr>
                         <td>@Html.DisplayFor(modelItem => opleiding.Naam)</td>
                         <td>@Html.DisplayFor(modelItem => opleiding.Beschrijving)</td>
                         <td>@opleiding.Begindatum.ToString("dd-MM-yyyy")</td>
                         <td>@opleiding.Einddatum.ToString("dd-MM-yyyy")</td>
                         <td>@Html.DisplayFor(modelItem => opleiding.AantalPlaatsen)</td>
-                        <td><button class="btn btn-primary">Inschrijven</button></td>
                         <td>
-                            <!-- Delete Form -->
-                            <form method="post" asp-action="Delete" asp-route-id="@opleiding.Id" onsubmit="return confirm('Ben je zeker dat je deze opleiding wilt verwijderen?')">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton_@opleiding.Id" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Kies een Monitor
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@opleiding.Id">
+                                    @foreach (var monitor in opleiding.AllMonitors)
+                                    {
+
+
+
+                                       @*  <li>
+                                            <form method="post" asp-controller="Opleiding" asp-action="Inschrijven" asp-route-monitorId="@monitor.Id" asp-route-persoonId="@monitor.PersoonId">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="OpleidingId" value="@opleiding.Id" />
+                                                <input type="hidden" name="PersoonId" value="@monitor.PersoonId" />
+                                                <button type="submit" class="dropdown-item">Schrijf @monitor.PersoonId in</button>
+                                            </form>
+                                        </li> *@
+                                    }
+                                </ul>
+                            </div>
+                        </td>
+
+                        <td>
+                            <form method="post" asp-action="Delete" asp-route-id="@opleiding.Id"
+                                  onsubmit="return confirm('Ben je zeker dat je deze opleiding wilt verwijderen?')">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZiekenFonds.API.Data;
 
@@ -11,9 +12,11 @@ using ZiekenFonds.API.Data;
 namespace ZiekenFonds.API.Migrations
 {
     [DbContext(typeof(ZiekenFondsApiContext))]
-    partial class ZiekenFondsApiContextModelSnapshot : ModelSnapshot
+    [Migration("20241217142303_dbcontextUpdates")]
+    partial class dbcontextUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

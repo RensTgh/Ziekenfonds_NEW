@@ -15,6 +15,7 @@ namespace ZiekenFonds.API.Data.UnitOfWork
         IOnkostenRepository OnkostenRepository { get; }
         IOpleidingRepository OpleidingRepository { get; }
         IReviewRepository ReviewRepository { get; }
+        IOpleidingPersoonRepository OpleidingPersoonRepository { get; }
 
         IDbContextTransaction BeginTransaction();
 

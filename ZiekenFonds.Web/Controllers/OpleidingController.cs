@@ -17,12 +17,6 @@ namespace ZiekenFonds.Web.Controllers
             _service = service;
         }
 
-        public async Task<IActionResult> IndexAsync()
-        {
-            OpleidingOphalenDto[] dto = await _service.GetAllOpleidingenAsync();
-            return View(dto);
-        }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -77,34 +71,78 @@ namespace ZiekenFonds.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
+            // Id check
+            if (id <= 0)
+            {
+                _logger.LogWarning($"Invalid ID attempted for deletion: {id}");
+                return RedirectToAction("Index");
+            }
+
             try
             {
-                // Id check
-                if (id <= 0)
-                {
-                    _logger.LogWarning($"Invalid ID attempted for deletion: {id}");
-                    return RedirectToAction("Index");
-                }
-
                 // Probeer te verwijderen
                 await _service.DeleteOpleiding(id);
 
                 // Add een TempData message voor als de delete werkt
                 TempData["SuccessMessage"] = "Opleiding successfully deleted.";
-
-                // Stuur de gebruiker terug naar de home page
-                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error deleting Opleiding with ID: {id}");
+                TempData["ErrorMessage"] = ex.Message;
+            }
 
-                // Add een TempData message voor als de delete niet werkt
-                TempData["ErrorMessage"] = "An error occurred while trying to delete the Opleiding.";
+            // Stuur de gebruiker terug naar de home page
+            return RedirectToAction("Index");
+        }
 
-                // Stuur de gebruiker terug naar de home page
+        public async Task<IActionResult> IndexAsync()
+        {
+            try
+            {
+                // Fetch all opleidingen
+                OpleidingOphalenDto[] opleidingen = await _service.GetAllOpleidingenAsync();
+
+                // Fetch all monitors
+                OpleidingMonitorPageDto[] allMonitors = await _service.GetAllMonitorsAsync();
+
+                if (allMonitors != null)
+                {
+                    foreach (var opleiding in opleidingen)
+                    {
+                        opleiding.AllMonitors = allMonitors.ToList();
+                    }
+                }
+
+                return View(opleidingen);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching opleidingen and monitors for Index");
+
+                // Return een error ??
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Inschrijven(int opleidingId, string persoonId)
+        {
+            if (opleidingId <= 0 || string.IsNullOrEmpty(persoonId))
+            {
+                TempData["ErrorMessage"] = "OpleidingId en PersoonId zijn vereist.";
                 return RedirectToAction("Index");
             }
+
+            try
+            {
+                await _service.InschrijvenAsync(opleidingId, persoonId);
+                TempData["SuccessMessage"] = "Succesvol ingeschreven.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Er is een fout opgetreden: {ex.Message}";
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

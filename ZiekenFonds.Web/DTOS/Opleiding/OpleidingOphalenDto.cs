@@ -13,5 +13,8 @@
         public DateTime Einddatum { get; set; }
 
         public int AantalPlaatsen { get; set; }
+
+        public List<OpleidingMonitorPageDto>? AllMonitors { get; set; } = new List<OpleidingMonitorPageDto>();
+
     }
 }

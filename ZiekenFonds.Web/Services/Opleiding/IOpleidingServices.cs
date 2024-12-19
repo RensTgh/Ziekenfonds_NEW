@@ -9,5 +9,9 @@ namespace ZiekenFonds.Web.Services.Opleiding
         Task CreateOpleidingAsync(CreateOpleidingPageDto dto);
 
         Task DeleteOpleiding(int id);
+
+        Task<OpleidingMonitorPageDto[]> GetAllMonitorsAsync();
+
+        Task InschrijvenAsync(int opleidingId, string persoonId);
     }
 }
