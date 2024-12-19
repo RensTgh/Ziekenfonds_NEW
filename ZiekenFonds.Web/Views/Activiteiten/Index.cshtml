@@ -1,12 +1,40 @@
-﻿@model Ziekenfonds.MVC.DTOS.ActiveitenDTO
+﻿@model Ziekenfonds.MVC.DTOS.ActiviteitenDTO[]
+
 @{
     ViewData["Title"] = "Activiteiten";
 }
 
-
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <p>Yeehaw</p>
-    <p>Mijn activeit is @Model.Naam en de beschrijving is @Model.Beschrijving</p>
+    <h1 class="display-4">Activiteiten</h1>
+
+    <!-- Knop voor het toevoegen van een nieuwe activiteit -->
+    <a asp-action="Create" class="btn btn-success">Create Activiteit</a>
+
+    <!-- Tabel voor de activiteiten -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th>Naam</th>
+                <th>Beschrijving</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var activiteit in Model)
+            {
+                <tr id="activiteit_@activiteit.Id">
+                    <td>@activiteit.Naam</td>
+                    <td>@activiteit.Beschrijving</td>
+                    <td>
+                        <!-- Bewerk en verwijder knoppen -->
+                        <form method="post" asp-action="Delete" asp-route-id="@activiteit.Id" onsubmit="return confirm('Weet je zeker dat je deze activiteit wilt verwijderen?">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
