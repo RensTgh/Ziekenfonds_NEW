@@ -10,10 +10,12 @@ namespace Ziekenfonds.MVC.Controllers
     public class ActiviteitenController : Controller
     {
         private readonly IActiviteitenService _service;
+        private readonly ILogger<ActiviteitenController> _logger;
 
-        public ActiviteitenController(IActiviteitenService service)
+        public ActiviteitenController(IActiviteitenService service, ILogger<ActiviteitenController> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         public async Task<IActionResult> IndexAsync()
