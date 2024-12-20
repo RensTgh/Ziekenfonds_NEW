@@ -12,6 +12,7 @@ builder.Services.AddScoped<IActiviteitenService, ActiviteitenService>();
 // In Startup.cs -> ConfigureServices method
 builder.Services.AddScoped<IMonitorService, MonitorService>();
 builder.Services.AddScoped<IOpleidingServices, OpleidingService>();
+builder.Services.AddScoped<IFotoService, FotoService>();
 
 var app = builder.Build();
 

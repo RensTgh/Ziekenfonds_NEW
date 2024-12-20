@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ZiekenFonds.Web.DTOS;
 using ZiekenFonds.Web.Services;
-using ZiekenFonds.MVC.Dtos;
 using ZiekenFonds.Web.DTOS.Foto;
 
 namespace ZiekenFonds.Web.Controllers
@@ -18,8 +16,6 @@ namespace ZiekenFonds.Web.Controllers
         // 1. Haal foto's op en toon ze
         public async Task<IActionResult> Index(int bestemmingId)
         {
-            if (bestemmingId <= 0)
-                return BadRequest("Invalid Bestemming ID.");
 
             try
             {
@@ -41,8 +37,12 @@ namespace ZiekenFonds.Web.Controllers
             if (bestemmingId <= 0)
                 return BadRequest("Invalid Bestemming ID.");
 
-            ViewBag.BestemmingId = bestemmingId;
-            return View();
+            var model = new UploadFotoDto
+            {
+                BestemmingId = bestemmingId
+            };
+
+            return View(model);
         }
 
         // 3. Verwerk foto-upload
@@ -67,24 +67,6 @@ namespace ZiekenFonds.Web.Controllers
                 return View(dto);
             }
         }
-
-        // 4. Verwijder een foto
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id, int bestemmingId)
-        {
-            if (id <= 0 || bestemmingId <= 0)
-                return BadRequest("Invalid Foto or Bestemming ID.");
-
-            try
-            {
-                await _fotoService.DeleteFotoAsync(id);
-                return RedirectToAction("Index", new { bestemmingId });
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", $"Failed to delete Foto: {ex.Message}");
-                return RedirectToAction("Index", new { bestemmingId });
-            }
-        }
     }
+
 }

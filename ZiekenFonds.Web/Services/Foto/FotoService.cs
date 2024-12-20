@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text;
-using ZiekenFonds.MVC.Dtos;
 using ZiekenFonds.Web.DTOS.Foto;
-
+    
 namespace ZiekenFonds.Web.Services
 {
     public class FotoService : IFotoService
@@ -62,8 +61,6 @@ namespace ZiekenFonds.Web.Services
 
         public async Task<GetFotoDto[]> GetAllFotosAsync(int bestemmingId)
         {
-            if (bestemmingId <= 0)
-                throw new ArgumentException("Invalid Bestemming ID", nameof(bestemmingId));
 
             using (HttpClient client = new HttpClient())
             {

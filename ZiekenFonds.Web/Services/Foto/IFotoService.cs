@@ -1,5 +1,4 @@
-﻿using ZiekenFonds.MVC.Dtos;
-using ZiekenFonds.Web.DTOS.Foto;
+﻿using ZiekenFonds.Web.DTOS.Foto;
 
 namespace ZiekenFonds.Web.Services
 {

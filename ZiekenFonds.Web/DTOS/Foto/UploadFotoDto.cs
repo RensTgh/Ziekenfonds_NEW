@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ZiekenFonds.MVC.Dtos
+namespace ZiekenFonds.Web.DTOS.Foto
 {
     public class UploadFotoDto
     {
         [Required]
         public int BestemmingId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Selecteer een bestand.")]
         public IFormFile File { get; set; }
     }
 }
