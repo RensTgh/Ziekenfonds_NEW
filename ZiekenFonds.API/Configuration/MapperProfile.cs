@@ -9,6 +9,7 @@ using ZiekenFonds.API.Dto.Onkosten;
 using ZiekenFonds.API.Dto.Kind;
 using ZiekenFonds.API.Models;
 using ZiekenFonds.API.Dto.Gebruiker;
+using ZiekenFonds.API.Dto.Foto;
 
 namespace ZiekenFonds.API.Configuration
 {
@@ -110,6 +111,10 @@ namespace ZiekenFonds.API.Configuration
             //Gebruiker 
             CreateMap<RegistratieDto, CustomUser>();
             CreateMap<LoginDto, CustomUser>();
+
+            //Foto
+            CreateMap<Foto, GetFotoDto>()
+                .ForMember(dest => dest.BestemmingNaam, opt => opt.MapFrom(src => src.Bestemming.Naam)); // Map de bestemmingsnaam
         }
     }
 }
