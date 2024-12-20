@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 using ZiekenFonds.Web.DTOS.Opleiding;
 
@@ -95,7 +94,6 @@ namespace ZiekenFonds.Web.Services.Opleiding
                     throw new Exception($"Failed to register: {error}");
                 }
             }
-
         }
     }
 }

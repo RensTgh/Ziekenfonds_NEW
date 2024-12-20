@@ -7,7 +7,6 @@ namespace ZiekenFonds.API.Data.Repository
     {
         public KindRepository(ZiekenFondsApiContext context) : base(context)
         {
-            
         }
 
         public new async Task<Kind> GetItemAsync(int id)

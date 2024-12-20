@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using ZiekenFonds.Web.DTOS.Deelnemer;
-using ZiekenFonds.Web.DTOS.Opleiding;
 
 namespace ZiekenFonds.Web.Services.Deelnemers
 {

@@ -9,7 +9,6 @@ using ZiekenFonds.API.Data.UnitOfWork;
 using ZiekenFonds.API.Helpers;
 using ZiekenFonds.API.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -44,14 +43,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-//Token 
+//Token
 Token.mySettings = new MySettings
 {
     Secret = (builder.Configuration["MySettings:Secret"] ?? "d4f.5E6a7-8b9c-0d1e-WfGl1m-4h5i6j7k8l9m").ToCharArray(),
     ValidIssuer = builder.Configuration["MySettings:ValidIssuer"] ?? "https://localhost:7055",
     ValidAudience = builder.Configuration["MySettings:ValidAudience"] ?? "https://localhost:7055"
 };
-
 
 builder.Configuration.GetRequiredSection(nameof(MySettings)).Bind(Token.mySettings);
 

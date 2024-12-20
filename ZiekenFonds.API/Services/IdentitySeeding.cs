@@ -8,10 +8,9 @@ namespace ZiekenFonds.API.Services
     {
         public async Task IdentitySeedingAsync(UserManager<CustomUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-
             try
             {
-                // Rollen aanmaken 
+                // Rollen aanmaken
                 bool role = await roleManager.RoleExistsAsync("deelnemer");
                 if (!role) await roleManager.CreateAsync(new IdentityRole("deelnemer"));
 

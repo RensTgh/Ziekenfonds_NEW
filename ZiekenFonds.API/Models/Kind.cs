@@ -29,6 +29,7 @@ namespace ZiekenFonds.API.Models
 
         // Relaties
         public List<Deelnemer> Deelnemers { get; set; }
-        public CustomUser Persoon {  get; set; }
+
+        public CustomUser Persoon { get; set; }
     }
 }

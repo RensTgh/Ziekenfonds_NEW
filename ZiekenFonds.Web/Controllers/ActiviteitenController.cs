@@ -25,7 +25,6 @@ namespace Ziekenfonds.MVC.Controllers
             return View(activeitenDTO);
         }
 
-
         // Toon de vorm om een activiteit toe te voegen
 
         [HttpGet]
@@ -38,11 +37,9 @@ namespace Ziekenfonds.MVC.Controllers
 
                 var model = new CreateActiviteitDTO
                 {
-
                 };
 
                 return View(model);
-                
             }
             catch (Exception ex)
             {
@@ -108,6 +105,5 @@ namespace Ziekenfonds.MVC.Controllers
                 return RedirectToAction("Index");
             }
         }
-
     }
 }

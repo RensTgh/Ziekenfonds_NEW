@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ZiekenFonds.API.Data.UnitOfWork;
-using ZiekenFonds.API.Dto.Activiteit;
-using ZiekenFonds.API.Dto.Kind;
-using ZiekenFonds.API.Dto.Monitor;
-using ZiekenFonds.API.Dto.Onkosten;
-using ZiekenFonds.API.Dto.Opleiding;
 using ZiekenFonds.API.Dto.Review;
 using ZiekenFonds.API.Models;
 

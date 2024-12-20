@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ZiekenFonds.Web.DTOS.Deelnemer
+﻿namespace ZiekenFonds.Web.DTOS.Deelnemer
 {
     public class DeelnemerInfoDTO
     {

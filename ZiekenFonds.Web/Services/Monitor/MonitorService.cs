@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Net.Http.Json;
+﻿using Newtonsoft.Json;
 using System.Text;
 using Ziekenfonds.MVC.DTOS;
 using ZiekenFonds.Web.DTOS.Monitor;

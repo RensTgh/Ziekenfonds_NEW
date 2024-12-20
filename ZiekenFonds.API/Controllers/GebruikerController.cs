@@ -10,7 +10,6 @@ using ZiekenFonds.API.Dto.Gebruiker;
 using ZiekenFonds.API.Helpers;
 using ZiekenFonds.API.Models;
 
-
 namespace ZiekenFonds.API.Controllers
 {
     [Route("api/[controller]")]
@@ -31,7 +30,6 @@ namespace ZiekenFonds.API.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-
 
         [HttpPost("register"), AllowAnonymous]
         public async Task<IActionResult> Register(RegistratieDto request)
@@ -137,8 +135,6 @@ namespace ZiekenFonds.API.Controllers
             ModelState.AddModelError("message", "Ongeldige loginpoging");
             return Unauthorized(ModelState);
         }
-
-
 
         [Route("Lijst")]
         [HttpGet]

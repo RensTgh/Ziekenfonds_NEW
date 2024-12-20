@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ZiekenFonds.Web.DTOS.Review
+﻿namespace ZiekenFonds.Web.DTOS.Review
 {
     public class ReviewOphalenPageDto
     {
@@ -11,4 +9,3 @@ namespace ZiekenFonds.Web.DTOS.Review
         public int? BestemmingId { get; set; }
     }
 }
-

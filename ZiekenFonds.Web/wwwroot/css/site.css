@@ -81,6 +81,7 @@ body {
     grid-template-columns: repeat(3, 1fr); /* Zorgt voor 3 kolommen */
     gap: 20px; /* Ruimte tussen de cards */
 }
+
 .custom-card {
     box-sizing: border-box; /* Zorgt dat padding en marge meedoen in breedte */
     background-color: white;

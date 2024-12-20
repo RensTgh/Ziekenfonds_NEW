@@ -1,15 +1,15 @@
-﻿using ZiekenFonds.API.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Numerics;
+using ZiekenFonds.API.Models;
 using Monitor = ZiekenFonds.API.Models.Monitor;
 
 namespace ZiekenFonds.API.Data
 {
     public class ZiekenFondsApiContext : IdentityDbContext<CustomUser>
     {
-
-        public ZiekenFondsApiContext(DbContextOptions<ZiekenFondsApiContext> options) : base(options) { }
+        public ZiekenFondsApiContext(DbContextOptions<ZiekenFondsApiContext> options) : base(options)
+        {
+        }
 
         public DbSet<Activiteit> Activiteiten { get; set; }
         public DbSet<Bestemming> Bestemmingen { get; set; }
@@ -60,7 +60,7 @@ namespace ZiekenFonds.API.Data
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
-            //CustomUser en Monitor 
+            //CustomUser en Monitor
             modelBuilder.Entity<Monitor>()
                 .HasOne(p => p.Persoon)
                 .WithMany(x => x.Monitors)
@@ -96,7 +96,7 @@ namespace ZiekenFonds.API.Data
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
-            //Groepsreis en Bestemming 
+            //Groepsreis en Bestemming
             modelBuilder.Entity<Groepsreis>()
                 .HasOne(p => p.Bestemming)
                 .WithMany(x => x.Groepsreizen)
@@ -167,8 +167,6 @@ namespace ZiekenFonds.API.Data
                 .HasForeignKey(y => y.OpleidingId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
-
-
         }
     }
 }

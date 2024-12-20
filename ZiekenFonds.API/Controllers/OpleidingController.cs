@@ -82,6 +82,7 @@ namespace ZiekenFonds.API.Controllers
 
             return Ok(dto.ToList());
         }
+
         [HttpPost("Inschrijven")]
         public async Task<IActionResult> Inschrijven(OpleidingPersoonInschrijvingDto dto)
         {
@@ -208,6 +209,7 @@ namespace ZiekenFonds.API.Controllers
 
             return NoContent();
         }
+
         private async Task<bool> OpleidingExists(int id)
         {
             var gevonden = await _unitOfWork.OpleidingRepository.GetItemAsync(id);

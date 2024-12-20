@@ -2,7 +2,7 @@
 
 namespace ZiekenFonds.API.Data.Repository
 {
-    public interface IDeelnemerRepository: IGenericRepository<Deelnemer>
+    public interface IDeelnemerRepository : IGenericRepository<Deelnemer>
     {
     }
 }

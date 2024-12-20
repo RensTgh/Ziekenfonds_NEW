@@ -25,6 +25,5 @@ namespace ZiekenFonds.API.Dto.Onkosten
         public DateTime Datum { get; set; }
 
         public string Foto { get; set; }
-
     }
 }

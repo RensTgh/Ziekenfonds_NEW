@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
-using ZiekenFonds.Web.DTOS.Opleiding;
 using ZiekenFonds.Web.DTOS.Review;
 
 namespace ZiekenFonds.Web.Services.Review

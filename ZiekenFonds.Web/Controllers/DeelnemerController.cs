@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Ziekenfonds.MVC.DTOS;
 using ZiekenFonds.Web.DTOS.Deelnemer;
 using ZiekenFonds.Web.Services.Deelnemers;
-using ZiekenFonds.Web.Services.Opleiding;
 
 namespace ZiekenFonds.Web.Controllers
 {
@@ -17,10 +15,8 @@ namespace ZiekenFonds.Web.Controllers
             _service = service;
         }
 
-
         public async Task<IActionResult> Index()
         {
-
             DeelnemersVanReisOphalenDTO[] dto = await _service.GetAllDeelnemersVanReis();
 
             return View(dto);

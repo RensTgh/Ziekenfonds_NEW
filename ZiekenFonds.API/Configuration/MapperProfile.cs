@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using ZiekenFonds.API.Dto.Opleiding;
-using ZiekenFonds.API.Dto.Bestemming;
-using ZiekenFonds.API.Dto.Monitor;
-using Monitor = ZiekenFonds.API.Models.Monitor;
 using ZiekenFonds.API.Dto.Activiteit;
-using ZiekenFonds.API.Dto.Groepsreis;
-using ZiekenFonds.API.Dto.Onkosten;
-using ZiekenFonds.API.Dto.Kind;
-using ZiekenFonds.API.Models;
-using ZiekenFonds.API.Dto.Gebruiker;
-using ZiekenFonds.API.Dto.Review;
+using ZiekenFonds.API.Dto.Bestemming;
 using ZiekenFonds.API.Dto.Foto;
+using ZiekenFonds.API.Dto.Gebruiker;
+using ZiekenFonds.API.Dto.Groepsreis;
+using ZiekenFonds.API.Dto.Kind;
+using ZiekenFonds.API.Dto.Monitor;
+using ZiekenFonds.API.Dto.Onkosten;
+using ZiekenFonds.API.Dto.Opleiding;
+using ZiekenFonds.API.Dto.Review;
+using ZiekenFonds.API.Models;
+using Monitor = ZiekenFonds.API.Models.Monitor;
 
 namespace ZiekenFonds.API.Configuration
 {
@@ -95,7 +95,7 @@ namespace ZiekenFonds.API.Configuration
             CreateMap<ActiviteitMakenDto, Activiteit>();
             CreateMap<ActiviteitUpdateDto, Activiteit>();
 
-            //Onkosten 
+            //Onkosten
             CreateMap<Onkosten, GetOnkostenDto>();
             CreateMap<CreateOnkostenDto, Onkosten>();
             CreateMap<UpdateOnkostenDto, Onkosten>();
@@ -114,13 +114,13 @@ namespace ZiekenFonds.API.Configuration
                 .ForMember(dest => dest.Allergieën, opt => opt.MapFrom(src => src.Allergieën ?? "Geen"))
                 .ForMember(dest => dest.Medicatie, opt => opt.MapFrom(src => src.Medicatie ?? "Geen"));
 
-            //Gebruiker 
+            //Gebruiker
             CreateMap<RegistratieDto, CustomUser>();
             CreateMap<LoginDto, CustomUser>();
 
             CreateMap<Review, OphalenReviewDto>();
             CreateMap<CreateReviewDto, Review>();
-            
+
             //Foto
             CreateMap<Foto, GetFotoDto>()
                 .ForMember(dest => dest.BestemmingNaam, opt => opt.MapFrom(src => src.Bestemming.Naam));

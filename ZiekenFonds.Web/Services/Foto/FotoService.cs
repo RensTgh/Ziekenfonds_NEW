@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
 using ZiekenFonds.Web.DTOS.Foto;
-    
+
 namespace ZiekenFonds.Web.Services
 {
     public class FotoService : IFotoService
@@ -62,10 +59,8 @@ namespace ZiekenFonds.Web.Services
 
         public async Task<GetFotoDto[]> GetAllFotosAsync(int bestemmingId)
         {
-
             using (HttpClient client = new HttpClient())
             {
-
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)

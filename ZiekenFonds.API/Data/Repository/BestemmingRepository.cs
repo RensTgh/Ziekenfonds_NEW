@@ -9,7 +9,6 @@ namespace ZiekenFonds.API.Data.Repository
         {
         }
 
-
         public async Task<IEnumerable<Bestemming>> GetAllBestemmingen()
         {
             return await _context.Set<Bestemming>()

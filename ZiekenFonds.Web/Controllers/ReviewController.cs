@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Diagnostics;
-using ZiekenFonds.Web.DTOS.Opleiding;
 using ZiekenFonds.Web.DTOS.Review;
-using ZiekenFonds.Web.Models;
 using ZiekenFonds.Web.Services.Bestemming;
-using ZiekenFonds.Web.Services.Opleiding;
 using ZiekenFonds.Web.Services.Review;
 
 namespace ZiekenFonds.Web.Controllers

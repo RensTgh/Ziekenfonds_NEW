@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ZiekenFonds.API.Data;
 using ZiekenFonds.API.Data.UnitOfWork;
 using ZiekenFonds.API.Dto.Foto;
 using ZiekenFonds.API.Models;
@@ -61,7 +60,6 @@ namespace ZiekenFonds.API.Controllers
         [HttpGet("{bestemmingId}")]
         public async Task<IActionResult> GetFotosByBestemming(int bestemmingId)
         {
- 
             var fotos = await _unitOfWork.FotoRepository.GetFotosByBestemming(bestemmingId);
 
             var fotosDto = fotos.Select(foto => new GetFotoDto
@@ -78,7 +76,6 @@ namespace ZiekenFonds.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFoto(int id)
         {
-
             var foto = await _unitOfWork.FotoRepository.GetItemAsync(id);
             if (foto == null)
                 return NotFound();

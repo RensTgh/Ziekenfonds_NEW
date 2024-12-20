@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http.Json;
 using System.Text;
-using System.Text.Json.Serialization;
 using Ziekenfonds.MVC.DTOS;
 using ZiekenFonds.Web.DTOS;
 
@@ -12,9 +10,7 @@ namespace ZiekenFonds.Web.Services
         // Service moet de locatie van de api kennen
         private string apiUrl = "https://localhost:7027/api/Activiteit";
 
-
         private string apiUrlDelete = "https://localhost:7027/api/Activiteit/{url}";
-
 
         public async Task<ActiviteitenDTO[]> GetAllActiviteitenAsync()
         {
@@ -33,8 +29,6 @@ namespace ZiekenFonds.Web.Services
                     ActiviteitenDTO[] dto = JsonConvert.DeserializeObject<ActiviteitenDTO[]>(responseData);
 
                     return dto;
-
-
                 }
 
                 return null;
@@ -62,7 +56,6 @@ namespace ZiekenFonds.Web.Services
             }
         }
 
-
         // nieuw
         public async Task CreateActiviteitAsync(CreateActiviteitDTO dto)
         {
@@ -81,9 +74,8 @@ namespace ZiekenFonds.Web.Services
                 throw new ArgumentException("Invallid Id", nameof(id));
             }
 
-            using(HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
-
                 HttpResponseMessage response = await client.DeleteAsync($"{apiUrl}/{id}");
 
                 if (!response.IsSuccessStatusCode)
@@ -94,6 +86,5 @@ namespace ZiekenFonds.Web.Services
                 }
             }
         }
-
     }
 }

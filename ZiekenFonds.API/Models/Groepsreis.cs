@@ -22,6 +22,7 @@ namespace ZiekenFonds.API.Models
 
         // Relaties
         public Bestemming Bestemming { get; set; }
+
         public List<Programma> Programmas { get; set; }
         public List<Deelnemer> Deelnemers { get; set; }
         public List<Onkosten> Onkosten { get; set; }

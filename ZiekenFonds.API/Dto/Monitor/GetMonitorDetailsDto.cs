@@ -1,6 +1,4 @@
-﻿using ZiekenFonds.API.Models;
-
-namespace ZiekenFonds.API.Dto.Monitor
+﻿namespace ZiekenFonds.API.Dto.Monitor
 {
     public class GetMonitorDetailsDto
     {
@@ -9,4 +7,3 @@ namespace ZiekenFonds.API.Dto.Monitor
         public IEnumerable<string> Bestemmingen { get; set; }
     }
 }
-

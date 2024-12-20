@@ -4,21 +4,17 @@ namespace ZiekenFonds.API.Dto.Gebruiker
 {
     public class RegistratieDto
     {
-
         [Required(ErrorMessage = "Naam is verplicht!")]
         [StringLength(50, ErrorMessage = "Naam mag maximaal 50 karakters lang zijn!")]
         public string Naam { get; set; }
-
 
         [Required(ErrorMessage = "Voornaam is verplicht!")]
         [StringLength(50, ErrorMessage = "Voornaam mag maximaal 50 karakters lang zijn!")]
         public string Voornaam { get; set; }
 
-
         [Required(ErrorMessage = "Straat is verplicht!")]
         [StringLength(50, ErrorMessage = "Straat mag maximaal 50 karakters lang zijn!")]
         public string Straat { get; set; }
-
 
         [Required(ErrorMessage = "Huisnummer is verplicht!")]
         [StringLength(5, ErrorMessage = "Huisnummer mag maximaal 5 karakters lang zijn!")]
@@ -66,4 +62,3 @@ namespace ZiekenFonds.API.Dto.Gebruiker
         public string ConfirmPassword { get; set; } = "";
     }
 }
-

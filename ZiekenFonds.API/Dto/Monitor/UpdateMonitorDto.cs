@@ -14,6 +14,5 @@ namespace ZiekenFonds.API.Dto.Monitor
 
         [Required(ErrorMessage = "Verplicht aan te duiden of monitor hoodmonitor is")]
         public bool IsHoofdMonitor { get; set; }
-
     }
 }

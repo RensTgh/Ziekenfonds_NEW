@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ZiekenFonds.API.Data.Repository;
 using ZiekenFonds.API.Data.UnitOfWork;
 using ZiekenFonds.API.Dto.Bestemming;
 using ZiekenFonds.API.Models;
@@ -21,7 +18,6 @@ namespace ZiekenFonds.API.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult<AllBestemmingenDto>> GetBestemming(int id)

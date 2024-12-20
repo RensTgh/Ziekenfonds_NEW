@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Numerics;
 using ZiekenFonds.API.Data.UnitOfWork;
 using ZiekenFonds.API.Dto.Activiteit;
 using ZiekenFonds.API.Models;

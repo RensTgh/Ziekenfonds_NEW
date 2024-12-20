@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZiekenFonds.API.Data.Repository;
 using ZiekenFonds.API.Data.UnitOfWork;
 using ZiekenFonds.API.Dto.Kind;
 using ZiekenFonds.API.Models;
@@ -188,4 +187,3 @@ namespace ZiekenFonds.API.Controllers
         }
     }
 }
-

@@ -2,8 +2,7 @@
 
 namespace ZiekenFonds.API.Data.Repository
 {
-    public interface IKindRepository: IGenericRepository<Kind>
+    public interface IKindRepository : IGenericRepository<Kind>
     {
-
     }
 }

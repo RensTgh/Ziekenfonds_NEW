@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ZiekenFonds.Web.Services;
 using ZiekenFonds.Web.DTOS.Foto;
+using ZiekenFonds.Web.Services;
 
 namespace ZiekenFonds.Web.Controllers
 {
@@ -16,7 +16,6 @@ namespace ZiekenFonds.Web.Controllers
         // 1. Haal foto's op en toon ze
         public async Task<IActionResult> Index(int bestemmingId)
         {
-
             try
             {
                 var fotos = await _fotoService.GetAllFotosAsync(bestemmingId);
@@ -34,7 +33,6 @@ namespace ZiekenFonds.Web.Controllers
         [HttpGet]
         public IActionResult Upload(int bestemmingId)
         {
-
             var model = new UploadFotoDto
             {
                 BestemmingId = bestemmingId
@@ -66,5 +64,4 @@ namespace ZiekenFonds.Web.Controllers
             }
         }
     }
-
 }

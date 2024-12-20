@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ZiekenFonds.Web.DTOS.Opleiding;
 
 namespace ZiekenFonds.Web.DTOS.Review
 {
@@ -13,13 +11,12 @@ namespace ZiekenFonds.Web.DTOS.Review
 
         [Required(ErrorMessage = "Tekst is verplicht!")]
         [StringLength(200)]
-        public string Tekst {  get; set; }
+        public string Tekst { get; set; }
 
         [Required(ErrorMessage = "Score is verplicht!")]
         [Range(0, 5)]
         public int Score { get; set; }
 
         public List<SelectListItem>? Bestemmingen { get; set; }
-
     }
 }
