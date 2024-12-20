@@ -1,0 +1,35 @@
+﻿@model ZiekenFonds.Web.DTOS.Review.CreateReviewPageDto
+
+@{
+    ViewData["Title"] = "Review Toevoegen";
+}
+
+<div class="container">
+    <h1>Review Toevoegen</h1>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Tekst">Tekst</label>
+            <input type="text" id="Tekst" name="Tekst" class="form-control" required value="@Model?.Tekst" />
+            @Html.ValidationMessageFor(model => model.Tekst, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="Score">Score</label>
+            <select id="Score" name="Score" class="form-control" required>
+                <option value="">Selecteer een score</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Score, "", new { @class = "text-danger" })
+        </div>
+
+        <select asp-for="BestemmingId" class="form-control" asp-items="Model.Bestemmingen"></select>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

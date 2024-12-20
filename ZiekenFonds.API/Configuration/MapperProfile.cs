@@ -9,6 +9,7 @@ using ZiekenFonds.API.Dto.Onkosten;
 using ZiekenFonds.API.Dto.Kind;
 using ZiekenFonds.API.Models;
 using ZiekenFonds.API.Dto.Gebruiker;
+using ZiekenFonds.API.Dto.Review;
 
 namespace ZiekenFonds.API.Configuration
 {
@@ -110,6 +111,10 @@ namespace ZiekenFonds.API.Configuration
             //Gebruiker 
             CreateMap<RegistratieDto, CustomUser>();
             CreateMap<LoginDto, CustomUser>();
+
+
+            CreateMap<Review, OphalenReviewDto>();
+            CreateMap<CreateReviewDto, Review>();
         }
     }
 }
