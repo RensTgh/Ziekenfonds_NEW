@@ -73,7 +73,7 @@ namespace ZiekenFonds.API.Data
                 .HasOne(p => p.Activiteit)
                 .WithMany(x => x.Programmas)
                 .HasForeignKey(y => y.ActiviteitId)
-                .OnDelete(DeleteBehavior.Restrict)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             //Programma en Groepsreis

@@ -1,7 +1,9 @@
 ﻿namespace Ziekenfonds.MVC.DTOS
 {
-    public class ActiveitenDTO
+    public class ActiviteitenDTO
     {
+
+        public int Id { get; set; }
         public string Naam { get; set; }
 
         public string Beschrijving { get; set; }

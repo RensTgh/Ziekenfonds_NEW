@@ -98,47 +98,5 @@ namespace ZiekenFonds.API.Controllers
 
             return Ok($"Activiteit met id {id} is verwijderd");
         }
-
-        // Update
-        [HttpPut("{id}")]
-        public async Task<IActionResult> ActiviteitWijzigen(int id, ActiviteitUpdateDto dto)
-        {
-            if (id != dto.Id)
-            {
-                return BadRequest("De opgegeven id's komen niet overeen.");
-            }
-
-            Activiteit existingActiviteit = _mapper.Map<Activiteit>(dto);
-
-            if (existingActiviteit == null)
-            {
-                return NotFound("De activiteit die je wil wijzigen, komt niet voor in de database.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.ActiviteitenRepository.UpdateItem(existingActiviteit);
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (_context.ActiviteitenRepository.GetItemAsync(id).Result != null)
-                {
-                    return NotFound("Er is geen activiteit met dit id gevonden");
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
     }
 }
