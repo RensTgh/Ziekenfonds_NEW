@@ -165,7 +165,7 @@ namespace ZiekenFonds.API.Data
                 .HasOne(p => p.Opleiding)
                 .WithMany(x => x.OpleidingenPersonen)
                 .HasForeignKey(y => y.OpleidingId)
-                .OnDelete(DeleteBehavior.Restrict)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
 

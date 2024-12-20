@@ -1,28 +1,22 @@
-﻿@model ZiekenFonds.Web.DTOS.Opleiding.OpleidingOphalenDto[]
+﻿@model ZiekenFonds.Web.DTOS.Opleiding.OpleidingOphalenDto
 
 <div class="text-center">
     <h1 class="display-4">Opleiding Pagina</h1>
 
-    <!-- Create Opleiding Button -->
     <div class="mb-3">
         <a asp-action="Create" class="btn btn-success">Create Opleiding</a>
     </div>
 
-    <!-- Add message displays -->
-    @if (TempData["SuccessMessage"] != null)
+    <!-- Message Display -->
+    @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null || TempData["ErrorEditMessage"] != null)
     {
-        <div class="alert alert-success">
-            @TempData["SuccessMessage"]
-        </div>
-    }
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger">
-            @TempData["ErrorMessage"]
+        <div class="alert @(TempData["ErrorMessage"] != null ? "alert-danger" : "alert-success")">
+            @TempData["SuccessMessage"] ?? @TempData["ErrorMessage"] ?? @TempData["ErrorEditMessage"]
         </div>
     }
 
-    <div>
+
+    <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
@@ -31,23 +25,35 @@
                     <th>Begindatum</th>
                     <th>Einddatum</th>
                     <th>Aantal Plaatsen</th>
-                    <th>Inschrijven</th>
+                    <th>Monitor</th>
                     <th>Acties</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var opleiding in Model)
+                @foreach (var opleiding in Model.Opleidingen)
                 {
-                    <tr id="opleiding_@opleiding.Id">
+                    <tr>
                         <td>@Html.DisplayFor(modelItem => opleiding.Naam)</td>
                         <td>@Html.DisplayFor(modelItem => opleiding.Beschrijving)</td>
                         <td>@opleiding.Begindatum.ToString("dd-MM-yyyy")</td>
                         <td>@opleiding.Einddatum.ToString("dd-MM-yyyy")</td>
                         <td>@Html.DisplayFor(modelItem => opleiding.AantalPlaatsen)</td>
-                        <td><button class="btn btn-primary">Inschrijven</button></td>
                         <td>
-                            <!-- Delete Form -->
-                            <form method="post" asp-action="Delete" asp-route-id="@opleiding.Id" onsubmit="return confirm('Ben je zeker dat je deze opleiding wilt verwijderen?')">
+                            <form method="post" asp-controller="Opleiding" asp-action="Inschrijven">
+                                <input type="hidden" asp-for="@opleiding.Id" name="opleidingId" value="@opleiding.Id" />
+                                <select name="PersoonId" class="form-control" asp-items="@Model.AlleMonitors" asp-for="@Model.OpleidingPersoonInschrijvingDto.PersoonId">
+                                </select>
+                                <span asp-validation-for="@Model.OpleidingPersoonInschrijvingDto.PersoonId" class="text-danger"></span>
+
+                                <button type="submit" class="btn btn-primary mt-2">
+                                    <i class="bi bi-person-plus"></i> Inschrijven
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" asp-action="Delete" asp-route-id="@opleiding.Id"
+                                  onsubmit="return confirm('Ben je zeker dat je deze opleiding wilt verwijderen?')">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
