@@ -34,8 +34,6 @@ namespace ZiekenFonds.Web.Controllers
         [HttpGet]
         public IActionResult Upload(int bestemmingId)
         {
-            if (bestemmingId <= 0)
-                return BadRequest("Invalid Bestemming ID.");
 
             var model = new UploadFotoDto
             {
