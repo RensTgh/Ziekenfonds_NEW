@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using ZiekenFonds.Web.DTOS.Opleiding;
 using ZiekenFonds.Web.Models;
@@ -15,12 +16,6 @@ namespace ZiekenFonds.Web.Controllers
         {
             _logger = logger;
             _service = service;
-        }
-
-        public async Task<IActionResult> IndexAsync()
-        {
-            OpleidingOphalenDto[] dto = await _service.GetAllOpleidingenAsync();
-            return View(dto);
         }
 
         [HttpGet]
@@ -56,7 +51,7 @@ namespace ZiekenFonds.Web.Controllers
             if (!ModelState.IsValid)
             {
                 dto.AllOpleidingen = (await _service.GetAllOpleidingenAsync()).ToList();
-                return View(dto);
+                return View();
             }
 
             try
@@ -69,7 +64,7 @@ namespace ZiekenFonds.Web.Controllers
                 _logger.LogError(ex, "Error creating Opleiding");
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the Opleiding.");
                 dto.AllOpleidingen = (await _service.GetAllOpleidingenAsync()).ToList();
-                return View(dto);
+                return View();
             }
         }
 
@@ -77,34 +72,82 @@ namespace ZiekenFonds.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
+            // Id check
+            if (id <= 0)
+            {
+                _logger.LogWarning($"Invalid ID attempted for deletion: {id}");
+                return RedirectToAction("Index");
+            }
+
             try
             {
-                // Id check
-                if (id <= 0)
-                {
-                    _logger.LogWarning($"Invalid ID attempted for deletion: {id}");
-                    return RedirectToAction("Index");
-                }
-
                 // Probeer te verwijderen
                 await _service.DeleteOpleiding(id);
 
                 // Add een TempData message voor als de delete werkt
                 TempData["SuccessMessage"] = "Opleiding successfully deleted.";
-
-                // Stuur de gebruiker terug naar de home page
-                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error deleting Opleiding with ID: {id}");
+                TempData["ErrorMessage"] = ex.Message;
+            }
 
-                // Add een TempData message voor als de delete niet werkt
-                TempData["ErrorMessage"] = "An error occurred while trying to delete the Opleiding.";
+            // Stuur de gebruiker terug naar de home page
+            return RedirectToAction("Index");
+        }
 
-                // Stuur de gebruiker terug naar de home page
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                OpleidingOphalenDto dto = new OpleidingOphalenDto();
+
+                // Fetch all opleidingen
+                var opleidingen = await _service.GetAllOpleidingenAsync();
+
+                // Fetch all monitors
+                OpleidingMonitorPageDto[] allMonitors = await _service.GetAllMonitorsAsync();
+
+                // TODO
+                dto.OpleidingPersoonInschrijvingDto = new OpleidingPersoonInschrijvingDto();
+                dto.Opleidingen = opleidingen.ToList();
+                dto.AlleMonitors = allMonitors.Select(k => new SelectListItem
+                {
+                    Value = k.PersoonId.ToString(),
+                    Text = $"{k.Naam} {k.Voornaam}",
+                }).ToList();
+
+                return View(dto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching opleidingen and monitors for Index");
+
+                // Return een error ??
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Inschrijven(OpleidingPersoonInschrijvingDto dto)
+        {
+            if (dto.OpleidingId <= 0 || string.IsNullOrEmpty(dto.PersoonId))
+            {
+                TempData["ErrorMessage"] = "OpleidingId en PersoonId zijn vereist.";
                 return RedirectToAction("Index");
             }
+
+            try
+            {
+                await _service.InschrijvenAsync(dto);
+                TempData["SuccessMessage"] = "Succesvol ingeschreven.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Er is een fout opgetreden: {ex.Message}";
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
