@@ -5,6 +5,7 @@ namespace ZiekenFonds.API.Dto.Bestemming
 {
     public class AllBestemmingenDto
     {
+        public int Id { get; set; }
         public string Code { get; set; }
         public string Naam { get; set; }
         public string Beschrijving { get; set; }

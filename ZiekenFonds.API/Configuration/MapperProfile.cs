@@ -9,6 +9,7 @@ using ZiekenFonds.API.Dto.Onkosten;
 using ZiekenFonds.API.Dto.Kind;
 using ZiekenFonds.API.Models;
 using ZiekenFonds.API.Dto.Gebruiker;
+using ZiekenFonds.API.Dto.Review;
 using ZiekenFonds.API.Dto.Foto;
 
 namespace ZiekenFonds.API.Configuration
@@ -117,6 +118,9 @@ namespace ZiekenFonds.API.Configuration
             CreateMap<RegistratieDto, CustomUser>();
             CreateMap<LoginDto, CustomUser>();
 
+            CreateMap<Review, OphalenReviewDto>();
+            CreateMap<CreateReviewDto, Review>();
+            
             //Foto
             CreateMap<Foto, GetFotoDto>()
                 .ForMember(dest => dest.BestemmingNaam, opt => opt.MapFrom(src => src.Bestemming.Naam));
