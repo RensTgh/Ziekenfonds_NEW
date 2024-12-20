@@ -47,6 +47,7 @@ namespace ZiekenFonds.API.Data.Repository
                     .ThenInclude(programma => programma.Activiteit)
                 .Include(groepsreis => groepsreis.Deelnemers)
                     .ThenInclude(deelnemers => deelnemers.Kind)
+                    .ThenInclude(kind => kind.Persoon)
                 .Include(groepsreis => groepsreis.Monitors)
                 .ToListAsync();
         }
