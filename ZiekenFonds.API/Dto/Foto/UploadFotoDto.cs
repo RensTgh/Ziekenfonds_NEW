@@ -8,11 +8,9 @@ namespace ZiekenFonds.API.Dto.Foto
             public IFormFile File { get; set; }
 
             [Required]
-            [StringLength(30, ErrorMessage = "De naam mag maximaal 30 tekens lang zijn.")]
-            public string Naam { get; set; }
+            public int BestemmingId { get; set; }
 
-            [Required]
-            public int BestemmingId { get; set; } 
+            public string BestemmingNaam { get; set; }
 
     }
 }

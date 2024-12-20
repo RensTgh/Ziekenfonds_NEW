@@ -114,7 +114,7 @@ namespace ZiekenFonds.API.Configuration
 
             //Foto
             CreateMap<Foto, GetFotoDto>()
-                .ForMember(dest => dest.BestemmingNaam, opt => opt.MapFrom(src => src.Bestemming.Naam)); // Map de bestemmingsnaam
+                .ForMember(dest => dest.BestemmingNaam, opt => opt.MapFrom(src => src.Bestemming.Naam));
         }
     }
 }

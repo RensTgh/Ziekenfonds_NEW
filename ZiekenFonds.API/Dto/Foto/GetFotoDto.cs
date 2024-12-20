@@ -8,11 +8,9 @@ namespace ZiekenFonds.API.Dto.Foto
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "De naam mag maximaal 30 tekens lang zijn.")]
+        [StringLength(100, ErrorMessage = "De bestandsnaam mag maximaal 100 tekens lang zijn.")]
         public string Naam { get; set; }
         
-        [Required]
-        public string BestandPad { get; set; }
         public string BestemmingNaam { get; set; }
     }
 }
