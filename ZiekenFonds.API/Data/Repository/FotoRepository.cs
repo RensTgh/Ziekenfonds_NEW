@@ -9,7 +9,10 @@ namespace ZiekenFonds.API.Data.Repository
         
         public async Task<IEnumerable<Foto>> GetFotosByBestemming(int bestemmingId)
         {
-            return await _context.Fotos.Where(f => f.BestemmingId == bestemmingId).ToListAsync();
+            return await _context.Fotos
+            .Include(f => f.Bestemming)
+            .Where(f => f.BestemmingId == bestemmingId)
+            .ToListAsync();
         }   
     }
 }
