@@ -74,7 +74,12 @@ namespace ZiekenFonds.API.Configuration
 
             CreateMap<Deelnemer, GroepsreisDeelnemerOphalenDto>()
                 .ForMember(dest => dest.DeelnemerNaam, opt => opt.MapFrom(src => $"{src.Kind.Voornaam} {src.Kind.Naam}"))
-                .ForMember(dest => dest.Omschrijving, opt => opt.MapFrom(src => src.Opmerking));
+                .ForMember(dest => dest.Omschrijving, opt => opt.MapFrom(src => src.Opmerking))
+                .ForMember(dest => dest.NaamVoogd, opt => opt.MapFrom(src => $"{src.Kind.Persoon.Voornaam} {src.Kind.Persoon.Naam}"))
+                .ForMember(dest => dest.Telefoonnummer, opt => opt.MapFrom(src => src.Kind.Persoon.TelefoonNummer))
+                .ForMember(dest => dest.Medicatie, opt => opt.MapFrom(src => src.Kind.Medicatie))
+                .ForMember(dest => dest.Allergieën, opt => opt.MapFrom(src => src.Kind.Allergieën))
+                .ForMember(dest => dest.Leeftijd, opt => opt.MapFrom(src => DateTime.Now.Year - src.Kind!.Geboortedatum.Year));
 
             CreateMap<Programma, GroepsreisProgrammaDto>()
                 .ForMember(dest => dest.activiteitTitel, opt => opt.MapFrom(src => src.Activiteit.Naam))
