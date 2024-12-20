@@ -10,7 +10,5 @@ namespace ZiekenFonds.API.Dto.Foto
             [Required]
             public int BestemmingId { get; set; }
 
-            public string BestemmingNaam { get; set; }
-
     }
 }
