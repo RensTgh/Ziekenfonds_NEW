@@ -20,6 +20,7 @@ namespace ZiekenFonds.API.Dto.Groepsreis
 
         //public List<int> ProgrammaIds { get; set; }
         public int[] ActiviteitIds { get; set; }
+
         //public List<int> KindIds { get; set; }
     }
 }

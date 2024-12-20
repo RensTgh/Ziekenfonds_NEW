@@ -17,7 +17,7 @@ namespace ZiekenFonds.API.Dto.Groepsreis
 
         [Required(ErrorMessage = "Prijs is verplicht!")]
         public float Prijs { get; set; }
-        public int[] ActiviteitIds { get; set; }
 
+        public int[] ActiviteitIds { get; set; }
     }
 }

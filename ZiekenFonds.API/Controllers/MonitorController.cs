@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Numerics;
-using System.Runtime.CompilerServices;
 using ZiekenFonds.API.Data.UnitOfWork;
 using ZiekenFonds.API.Dto.Monitor;
 using Monitor = ZiekenFonds.API.Models.Monitor;
@@ -29,9 +26,9 @@ namespace ZiekenFonds.API.Controllers
             IEnumerable<Monitor> monitors = await _uow.MonitorRepository.GetAllItemsAsync();
 
             if (monitors != null)
-                { return Ok(monitors); }
+            { return Ok(monitors); }
             else
-                { return NotFound(); }
+            { return NotFound(); }
         }
 
         [HttpGet("{id}")]
@@ -55,9 +52,9 @@ namespace ZiekenFonds.API.Controllers
             List<GetMonitorDto> result = _mapper.Map<List<GetMonitorDto>>(modellen);
 
             if (result != null)
-                { return Ok(result); }
+            { return Ok(result); }
             else
-                { return NotFound(); }
+            { return NotFound(); }
         }
 
         [HttpGet("MonitorDetails/{id}")]
@@ -99,9 +96,9 @@ namespace ZiekenFonds.API.Controllers
                 await _uow.MonitorRepository.AddItemAsync(monitor);
                 await _uow.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(CreateMonitor),null);
+                return CreatedAtAction(nameof(CreateMonitor), null);
             }
-            catch (DbUpdateException ex) 
+            catch (DbUpdateException ex)
             {
                 return BadRequest(ex);
             }
@@ -110,14 +107,14 @@ namespace ZiekenFonds.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> MonitorVerwijderen(int id)
         {
-            if(_uow.MonitorRepository == null)
+            if (_uow.MonitorRepository == null)
             {
                 return NotFound();
             }
 
             var monitor = await _uow.MonitorRepository.GetItemAsync(id);
 
-            if(monitor == null)
+            if (monitor == null)
             {
                 return NotFound();
             }
@@ -144,7 +141,7 @@ namespace ZiekenFonds.API.Controllers
 
             Monitor monitor = _mapper.Map<Monitor>(dto);
 
-            if(!await _uow.GroepsReisRepository.ExistsAsync(monitor.GroepsreisId))
+            if (!await _uow.GroepsReisRepository.ExistsAsync(monitor.GroepsreisId))
             {
                 return BadRequest("Deze groepsreis bestaat niet");
             }
@@ -157,17 +154,18 @@ namespace ZiekenFonds.API.Controllers
             {
                 await _uow.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException) 
+            catch (DbUpdateConcurrencyException)
             {
                 if (_uow.MonitorRepository.GetItemAsync(id).Result != null)
                 {
                     return NotFound("Er is geen monitor gevonden met deze id");
-                } else
+                }
+                else
                 {
                     throw;
                 }
             }
-           
+
             return NoContent();
         }
     }

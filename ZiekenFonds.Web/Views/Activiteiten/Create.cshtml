@@ -1,0 +1,26 @@
+﻿@model ZiekenFonds.Web.DTOS.CreateActiviteitDTO
+
+@{
+    ViewData["Title"] = "Create Activiteit";
+}
+
+<div class="container">
+    <h1>Create Opleiding</h1>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Naam">Naam</label>
+            <input type="text" id="Naam" name="Naam" class="form-control" required value="@Model?.Naam" />
+            @Html.ValidationMessageFor(model => model.Naam, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="Beschrijving">Beschrijving</label>
+            <textarea id="Beschrijving" name="Beschrijving" class="form-control" required>@Model?.Beschrijving</textarea>
+            @Html.ValidationMessageFor(model => model.Beschrijving, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

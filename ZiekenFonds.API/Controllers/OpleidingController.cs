@@ -12,24 +12,49 @@ namespace ZiekenFonds.API.Controllers
     [ApiController]
     public class OpleidingController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        //private readonly IOpleidingPersoonRepository _opleidingPersoonRepository;
 
         public OpleidingController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            //_opleidingPersoonRepository = opleidingPersoonRepository;
         }
 
         [AllowAnonymous]
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<OpleidingWithPersonenDto>>> GetOpleidingen()
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOpleiding(int id)
         {
-            IEnumerable<Opleiding> opleidingen = await _unitOfWork.OpleidingRepository.GetOpleidingenWithOpleidingPersoonEnVooropleidingen();
+            var opleiding = await _unitOfWork.OpleidingRepository.GetItemAsync(id);
 
-            List<OpleidingWithPersonenDto> dto = _mapper.Map<List<OpleidingWithPersonenDto>>(opleidingen);
+            if (opleiding == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                // Verwijder de opleiding zelf
+                _unitOfWork.OpleidingRepository.DeleteItem(opleiding);
 
-            return Ok(dto.ToList());
+                // Sla alle wijzigingen op in de database
+                await _unitOfWork.SaveChangesAsync();
+
+                // Geef een "NoContent" terug om aan te geven dat de operatie geslaagd is
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("SAME TABLE REFERENCE") || ex.InnerException.Message.Contains("SAME TABLE REFERENCE"))
+                {
+                    return BadRequest("Error: Opleiding is vereist voor een andere opleiding!.");
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
         [AllowAnonymous]
@@ -45,6 +70,51 @@ namespace ZiekenFonds.API.Controllers
 
             var dto = _mapper.Map<OpleidingWithPersonenDto>(opleiding);
             return Ok(dto);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<OpleidingWithPersonenDto>>> GetOpleidingen()
+        {
+            IEnumerable<Opleiding> opleidingen = await _unitOfWork.OpleidingRepository.GetOpleidingenWithOpleidingPersoonEnVooropleidingen();
+
+            List<OpleidingWithPersonenDto> dto = _mapper.Map<List<OpleidingWithPersonenDto>>(opleidingen);
+
+            return Ok(dto.ToList());
+        }
+
+        [HttpPost("Inschrijven")]
+        public async Task<IActionResult> Inschrijven(OpleidingPersoonInschrijvingDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var opleiding = await _unitOfWork.OpleidingRepository.GetItemAsync(dto.OpleidingId);
+            if (opleiding == null)
+            {
+                return NotFound($"Opleiding with ID {dto.OpleidingId} not found.");
+            }
+
+            var persoonExists = await _unitOfWork.MonitorRepository.GetMonitorDetailsAsync(dto.PersoonId);
+            if (persoonExists == null)
+            {
+                return NotFound($"Persoon with ID {dto.PersoonId} not found.");
+            }
+
+            // Create een nieuw OpleidingPersoon
+            var opleidingPersoon = new OpleidingPersoon
+            {
+                OpleidingId = dto.OpleidingId,
+                PersoonId = dto.PersoonId
+            };
+
+            await _unitOfWork.OpleidingPersoonRepository.AddItemAsync(opleidingPersoon);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetOpleiding), new { id = dto.OpleidingId }, dto);
         }
 
         [AllowAnonymous]
@@ -140,47 +210,11 @@ namespace ZiekenFonds.API.Controllers
             return NoContent();
         }
 
-        [AllowAnonymous]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOpleiding(int id)
-        {
-            var opleiding = await _unitOfWork.OpleidingRepository.GetItemAsync(id);
-
-            if (opleiding == null)
-            {
-                return NotFound();
-            }
-
-            // Haal alle gerelateerde records op uit de OpleidingPersoon-tabel
-            var relatedRecords = _unitOfWork.OpleidingRepository.GetRelatedOpleidingPersonen(id);
-
-            // Verwijder alle gerelateerde records als er records gevonden worden
-            if (relatedRecords.Any())
-            {
-                foreach (var record in relatedRecords)
-                {
-                    _unitOfWork.OpleidingRepository.RemoveOpleidingPersoon(record);
-                }
-            }
-
-            // Verwijder de opleiding zelf
-            _unitOfWork.OpleidingRepository.DeleteItem(opleiding);
-
-            // Sla alle wijzigingen op in de database
-            await _unitOfWork.SaveChangesAsync();
-
-            // Geef een "NoContent" terug om aan te geven dat de operatie geslaagd is
-            return NoContent();
-        }
-
         private async Task<bool> OpleidingExists(int id)
         {
             var gevonden = await _unitOfWork.OpleidingRepository.GetItemAsync(id);
 
-            if (gevonden == null)
-                return false;
-            else
-                return true;
+            return gevonden != null;
         }
     }
 }

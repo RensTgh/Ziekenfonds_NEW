@@ -2,7 +2,7 @@
 
 namespace ZiekenFonds.API.Data.Repository
 {
-    public class OnkostenRepository : GenericRepository<Onkosten> , IOnkostenRepository
+    public class OnkostenRepository : GenericRepository<Onkosten>, IOnkostenRepository
     {
         public OnkostenRepository(ZiekenFondsApiContext context) : base(context)
         {

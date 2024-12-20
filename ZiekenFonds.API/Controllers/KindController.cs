@@ -141,6 +141,49 @@ namespace ZiekenFonds.API.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("RegisterForGroepsreis")]
+        public async Task<ActionResult> RegisterForGroepsreis([FromBody] RegisterForGroepsreisDto dto)
+        {
+            var kind = await _context.KindRepository.GetItemAsync(dto.KindId);
+            var groepsReis = await _context.GroepsReisRepository.GetCompleteGroepsReis(dto.GroepsReisId);
+
+            if (kind == null || groepsReis == null)
+            {
+                return NotFound("Kind of Groepsreis niet gevonden.");
+            }
+
+            // Bereken de leeftijd van het kind
+            int leeftijd = DateTime.Now.Year - kind.Geboortedatum.Year;
+            if (kind.Geboortedatum.Date > DateTime.Now.AddYears(-leeftijd)) leeftijd--;
+
+            // Controleer of de leeftijd binnen de limieten valt
+            if (leeftijd < groepsReis.Bestemming.MinLeeftijd || leeftijd > groepsReis.Bestemming.MaxLeeftijd)
+            {
+                return BadRequest("De leeftijd van het kind valt niet binnen de toegestane leeftijdsgrens van de groepsreis.");
+            }
+
+            // Maak een nieuwe Deelnemer aan
+            var deelnemer = new Deelnemer
+            {
+                KindId = kind.Id,
+                GroepsreisId = groepsReis.Id,
+                Opmerking = dto.Opmerking // Gebruik de opmerking uit het DTO
+            };
+
+            // Voeg Deelnemer toe aan de Deelnemer-repository
+            await _context.DeelnemerRepository.AddItemAsync(deelnemer);
+
+            // Sla wijzigingen op in de database
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                Message = "Inschrijving succesvol",
+                KindNaam = $"{kind.Voornaam} {kind.Naam}",
+                GroepsreisNaam = groepsReis.Bestemming.Naam,
+                Opmerking = dto.Opmerking
+            });
+        }
     }
 }
-

@@ -27,6 +27,6 @@ namespace ZiekenFonds.API.Models
         public string Foto { get; set; }
 
         // Relaties
-        public Groepsreis Groepsreis { get; set; } 
+        public Groepsreis Groepsreis { get; set; }
     }
 }

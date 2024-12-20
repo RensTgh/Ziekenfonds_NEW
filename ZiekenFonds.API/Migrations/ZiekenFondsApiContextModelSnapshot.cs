@@ -775,7 +775,7 @@ namespace ZiekenFonds.API.Migrations
                     b.HasOne("ZiekenFonds.API.Models.Opleiding", "Opleiding")
                         .WithMany("OpleidingenPersonen")
                         .HasForeignKey("OpleidingId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ZiekenFonds.API.Models.CustomUser", "Persoon")
@@ -794,7 +794,7 @@ namespace ZiekenFonds.API.Migrations
                     b.HasOne("ZiekenFonds.API.Models.Activiteit", "Activiteit")
                         .WithMany("Programmas")
                         .HasForeignKey("ActiviteitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ZiekenFonds.API.Models.Groepsreis", "Groepsreis")

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using ZiekenFonds.API.Data.UnitOfWork;
 using ZiekenFonds.API.Dto.Groepsreis;
@@ -90,11 +89,9 @@ namespace ZiekenFonds.API.Controllers
             return CreatedAtAction(nameof(GroepsreisToevoegen), null);
         }
 
-
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGroepsreis(int id, UpdateGroepsreisDto dto)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -123,7 +120,7 @@ namespace ZiekenFonds.API.Controllers
                     await _uow.SaveChangesAsync();
                     await transaction.CommitAsync();
                 }
-                catch 
+                catch
                 {
                     await transaction.RollbackAsync();
                     throw;
@@ -157,7 +154,5 @@ namespace ZiekenFonds.API.Controllers
 
             return Ok($"Groepsreis met id {id} is verwijderd.");
         }
-
-
     }
 }

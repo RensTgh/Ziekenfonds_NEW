@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ZiekenFonds.API.Models;
 
 namespace ZiekenFonds.API.Dto.Onkosten
 {

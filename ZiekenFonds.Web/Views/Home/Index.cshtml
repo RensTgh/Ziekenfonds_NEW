@@ -3,7 +3,82 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Activiteiten" asp-action="Index">Yeehaw</a>
+    <h1 class="display-4">Dashboard</h1>
+
+    <div class="card-container">
+        <div class="custom-card">
+            <div class="card-header">
+                <h3>Opleidingen</h3>
+            </div>
+            <div class="card-image">
+                <img src="/assets/pexels-fauxels-3184644 (1).jpg" alt="Opleidingen">
+            </div>
+            <div class="card-body">
+                <p>Shrijf monitoren in voor opleidingen en beheer de opleidingen</p>
+                <button class="card-button">
+                    <a class="text-light text-decoration-none" asp-controller="Opleiding" asp-action="Index">Toon opleidingen</a>
+                </button>
+            </div>
+        </div>
+
+        <div class="custom-card">
+            <div class="card-header">
+                <h3>Deelnemer lijst</h3>
+            </div>
+            <div class="card-image">
+                <img src="/assets/pexels-goumbik-296301 (1).jpg" alt="deelnemers">
+            </div>
+            <div class="card-body">
+                <p>Neem een kijkje naar de deelnemers van verschillende bestemmingen.</p>
+                <button class="card-button">
+                    <a class="text-light text-decoration-none" asp-controller="Deelnemer" asp-action="Index">Toon deelnemers</a>
+                </button>
+            </div>
+        </div>
+
+        <div class="custom-card">
+            <div class="card-header">
+                <h3>Activiteiten</h3>
+            </div>
+            <div class="card-image">
+                <img src="/assets/pexels-dreamypixel-547116 (1).jpg" alt="activiteit">
+            </div>
+            <div class="card-body">
+                <p>Ga verder naar activiteiten als je nieuwe actieviteiten wilt toevoegen of verwijderen.</p>
+                <button class="card-button">
+                    <a class="text-light text-decoration-none" asp-controller="Activiteiten" asp-action="Index">Toon activiteiten</a>
+                </button>
+            </div>
+        </div>
+
+        <div class="custom-card">
+            <div class="card-header">
+                <h3>Monitoren lijst</h3>
+            </div>
+            <div class="card-image">
+                <img src="/assets/pexels-cottonbro-4880395 (1).jpg" alt="Jongvolwassenen">
+            </div>
+            <div class="card-body">
+                <p>Hier kan men de lijst van alle monitoren zien met persoonlijke informatie.</p>
+                <button class="card-button">
+                    <a class="text-light text-decoration-none" asp-controller="Monitor" asp-action="Index">Toon monitoren</a>
+                </button>
+            </div>
+        </div>
+
+        <div class="custom-card">
+            <div class="card-header">
+                <h3>Reviews</h3>
+            </div>
+            <div class="card-image">
+                <img src="/assets/pexels-markus-winkler-1430818-4065400 (1).jpg" alt="Jongvolwassenen">
+            </div>
+            <div class="card-body">
+                <p>Laat je review achter en laat mensen weten hoe fijn onze reizen zijn.</p>
+                <button class="card-button">
+                    <a class="text-light text-decoration-none" asp-controller="Review" asp-action="Index">Toon reviews</a>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

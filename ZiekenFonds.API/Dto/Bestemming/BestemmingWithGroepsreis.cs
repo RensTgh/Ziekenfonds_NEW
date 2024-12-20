@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ZiekenFonds.API.Dto.Bestemming
+﻿namespace ZiekenFonds.API.Dto.Bestemming
 {
     public class BestemmingWithGroepsreis
     {

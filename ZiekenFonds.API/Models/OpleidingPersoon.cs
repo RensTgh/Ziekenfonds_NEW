@@ -14,6 +14,7 @@ namespace ZiekenFonds.API.Models
 
         // Relaties
         public Opleiding Opleiding { get; set; }
-        public CustomUser Persoon {  get; set; }
+
+        public CustomUser Persoon { get; set; }
     }
 }

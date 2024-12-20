@@ -2,7 +2,7 @@
 {
     public class ActiviteitMakenDto
     {
-        public string Naam {  get; set; }
+        public string Naam { get; set; }
 
         public string Beschrijving { get; set; }
     }

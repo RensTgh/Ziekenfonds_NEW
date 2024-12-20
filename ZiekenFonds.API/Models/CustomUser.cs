@@ -74,6 +74,7 @@ namespace ZiekenFonds.API.Models
 
         // Relaties
         public List<Monitor> Monitors { get; set; }
+
         public List<Review> Reviews { get; set; }
         public List<Kind> Kinderen { get; set; }
         public List<OpleidingPersoon> OpleidingenPersonen { get; set; }

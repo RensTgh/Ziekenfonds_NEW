@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
-using ZiekenFonds.API.Dto.Opleiding;
-using ZiekenFonds.API.Dto.Bestemming;
-using ZiekenFonds.API.Dto.Monitor;
-using Monitor = ZiekenFonds.API.Models.Monitor;
 using ZiekenFonds.API.Dto.Activiteit;
+using ZiekenFonds.API.Dto.Bestemming;
+using ZiekenFonds.API.Dto.Foto;
+using ZiekenFonds.API.Dto.Gebruiker;
 using ZiekenFonds.API.Dto.Groepsreis;
-using ZiekenFonds.API.Dto.Onkosten;
 using ZiekenFonds.API.Dto.Kind;
+using ZiekenFonds.API.Dto.Monitor;
+using ZiekenFonds.API.Dto.Onkosten;
+using ZiekenFonds.API.Dto.Opleiding;
+using ZiekenFonds.API.Dto.Review;
 using ZiekenFonds.API.Models;
+using Monitor = ZiekenFonds.API.Models.Monitor;
 
 namespace ZiekenFonds.API.Configuration
 {
@@ -53,6 +56,7 @@ namespace ZiekenFonds.API.Configuration
             //Monitor mappings
             CreateMap<Monitor, GetMonitorDto>()
                 .ForMember(dest => dest.Naam, x => x.MapFrom(src => src.Persoon.Naam))
+                .ForMember(dest => dest.Leeftijd, opt => opt.MapFrom(src => DateTime.Now.Year - src.Persoon!.Geboortedatum.Year))
                 .ForMember(dest => dest.Voornaam, x => x.MapFrom(src => src.Persoon.Voornaam))
                 .ForMember(dest => dest.Email, x => x.MapFrom(src => src.Persoon.Email))
                 .ForMember(dest => dest.Telefoonnummer, x => x.MapFrom(src => src.Persoon.TelefoonNummer));
@@ -71,7 +75,12 @@ namespace ZiekenFonds.API.Configuration
 
             CreateMap<Deelnemer, GroepsreisDeelnemerOphalenDto>()
                 .ForMember(dest => dest.DeelnemerNaam, opt => opt.MapFrom(src => $"{src.Kind.Voornaam} {src.Kind.Naam}"))
-                .ForMember(dest => dest.Omschrijving, opt => opt.MapFrom(src => src.Opmerking));
+                .ForMember(dest => dest.Omschrijving, opt => opt.MapFrom(src => src.Opmerking))
+                .ForMember(dest => dest.NaamVoogd, opt => opt.MapFrom(src => $"{src.Kind.Persoon.Voornaam} {src.Kind.Persoon.Naam}"))
+                .ForMember(dest => dest.Telefoonnummer, opt => opt.MapFrom(src => src.Kind.Persoon.TelefoonNummer))
+                .ForMember(dest => dest.Medicatie, opt => opt.MapFrom(src => src.Kind.Medicatie))
+                .ForMember(dest => dest.Allergieën, opt => opt.MapFrom(src => src.Kind.Allergieën))
+                .ForMember(dest => dest.Leeftijd, opt => opt.MapFrom(src => DateTime.Now.Year - src.Kind!.Geboortedatum.Year));
 
             CreateMap<Programma, GroepsreisProgrammaDto>()
                 .ForMember(dest => dest.activiteitTitel, opt => opt.MapFrom(src => src.Activiteit.Naam))
@@ -86,7 +95,7 @@ namespace ZiekenFonds.API.Configuration
             CreateMap<ActiviteitMakenDto, Activiteit>();
             CreateMap<ActiviteitUpdateDto, Activiteit>();
 
-            //Onkosten 
+            //Onkosten
             CreateMap<Onkosten, GetOnkostenDto>();
             CreateMap<CreateOnkostenDto, Onkosten>();
             CreateMap<UpdateOnkostenDto, Onkosten>();
@@ -104,6 +113,17 @@ namespace ZiekenFonds.API.Configuration
             CreateMap<UpdateKind, Kind>()
                 .ForMember(dest => dest.Allergieën, opt => opt.MapFrom(src => src.Allergieën ?? "Geen"))
                 .ForMember(dest => dest.Medicatie, opt => opt.MapFrom(src => src.Medicatie ?? "Geen"));
+
+            //Gebruiker
+            CreateMap<RegistratieDto, CustomUser>();
+            CreateMap<LoginDto, CustomUser>();
+
+            CreateMap<Review, OphalenReviewDto>();
+            CreateMap<CreateReviewDto, Review>();
+
+            //Foto
+            CreateMap<Foto, GetFotoDto>()
+                .ForMember(dest => dest.BestemmingNaam, opt => opt.MapFrom(src => src.Bestemming.Naam));
         }
     }
 }

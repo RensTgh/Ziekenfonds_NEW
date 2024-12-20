@@ -4,6 +4,5 @@ namespace ZiekenFonds.API.Data.Repository
 {
     public interface IOnkostenRepository : IGenericRepository<Onkosten>
     {
-
     }
 }
