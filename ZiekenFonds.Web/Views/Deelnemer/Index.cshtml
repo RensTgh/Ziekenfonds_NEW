@@ -1,0 +1,75 @@
+﻿@model ZiekenFonds.Web.DTOS.Deelnemer.DeelnemersVanReisOphalenDTO[]
+
+@{
+    ViewData["Title"] = "Deelnemers";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center display-4">Deelnemerlijsten</h1>
+    <div class="mb-4">
+        <label for="bestemmingDropdown" class="form-label">Kies een bestemming:</label>
+        <select id="bestemmingDropdown" class="form-select" name="selectedBestemming" onchange="toonDeelnemers(this.value)">
+            <option value="">Selecteer een bestemming</option>
+            @if (Model != null)
+            {
+                foreach (var bestemming in Model)
+                {
+                    <option value="@bestemming.BestemmingId">@bestemming.Bestemming</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div id="deelnemersContainer">
+        <p class="text-center">Selecteer een bestemming om deelnemers te zien.</p>
+    </div>
+</div>
+
+<script>
+    const reizen = @Html.Raw(Json.Serialize(Model));
+
+    function toonDeelnemers(bestemmingId) {
+        if (!bestemmingId) {
+            document.getElementById('deelnemersContainer').innerHTML =
+                '<p class="text-center">Selecteer een bestemming om deelnemers te zien.</p>';
+            return;
+        }
+
+        const reis = reizen.find(r => r.bestemmingId === parseInt(bestemmingId));
+        if (!reis) {
+            document.getElementById('deelnemersContainer').innerHTML =
+                '<p class="text-center">Geen reis gevonden voor deze bestemming.</p>';
+            return;
+        }
+
+        if (!reis.deelnemers || reis.deelnemers.length === 0) {
+            document.getElementById('deelnemersContainer').innerHTML =
+                `<div class="alert alert-info text-center" role="alert">
+                    Er zijn nog geen deelnemers ingeschreven voor de reis naar ${reis.bestemming}.
+                </div>`;
+            return;
+        }
+
+        let html = '<div class="row">';
+        for (const deelnemer of reis.deelnemers) {
+            html += `
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">${deelnemer.deelnemerNaam}</h5>
+                                <p class="card-text">
+                                    <strong>Omschrijving:</strong> ${deelnemer.omschrijving}<br>
+                                    <strong>Leeftijd:</strong> ${deelnemer.leeftijd} jaar<br>
+                                    <strong>Allergieën:</strong> ${deelnemer.allergieën || 'Geen'}<br>
+                                    <strong>Medicatie:</strong> ${deelnemer.medicatie || 'Geen'}<br>
+                                    <strong>Voogd:</strong> ${deelnemer.naamVoogd}<br>
+                                    <strong>Telefoonnummer:</strong> ${deelnemer.telefoonnummer}
+                                </p>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+        html += '</div>';
+        document.getElementById('deelnemersContainer').innerHTML = html;
+    }
+</script>

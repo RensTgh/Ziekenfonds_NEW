@@ -16,6 +16,7 @@ namespace ZiekenFonds.API.Data.UnitOfWork
         private IOnkostenRepository _onkostenRepository;
         private IOpleidingRepository _opleidingRepository;
         private IReviewRepository _reviewRepository;
+        private IOpleidingPersoonRepository _opleidingPersoonRepository;
 
         public UnitOfWork(ZiekenFondsApiContext context)
         {
@@ -104,6 +105,14 @@ namespace ZiekenFonds.API.Data.UnitOfWork
             get
             {
                 return _reviewRepository ??= new ReviewRepository(_context);
+            }
+        }
+
+        public IOpleidingPersoonRepository OpleidingPersoonRepository
+        {
+            get
+            {
+                return _opleidingPersoonRepository ??= new OpleidingPersoonRepository(_context);
             }
         }
 
