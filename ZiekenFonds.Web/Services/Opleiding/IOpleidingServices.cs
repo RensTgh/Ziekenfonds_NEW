@@ -4,7 +4,7 @@ namespace ZiekenFonds.Web.Services.Opleiding
 {
     public interface IOpleidingServices
     {
-        Task<OpleidingOphalenDto[]> GetAllOpleidingenAsync();
+        Task<OpleidingDto[]> GetAllOpleidingenAsync();
 
         Task CreateOpleidingAsync(CreateOpleidingPageDto dto);
 

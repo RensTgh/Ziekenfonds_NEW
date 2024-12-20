@@ -51,7 +51,7 @@ namespace ZiekenFonds.Web.Controllers
             if (!ModelState.IsValid)
             {
                 dto.AllOpleidingen = (await _service.GetAllOpleidingenAsync()).ToList();
-                return View(dto);
+                return View();
             }
 
             try
@@ -64,7 +64,7 @@ namespace ZiekenFonds.Web.Controllers
                 _logger.LogError(ex, "Error creating Opleiding");
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the Opleiding.");
                 dto.AllOpleidingen = (await _service.GetAllOpleidingenAsync()).ToList();
-                return View(dto);
+                return View();
             }
         }
 
@@ -100,23 +100,24 @@ namespace ZiekenFonds.Web.Controllers
         {
             try
             {
+                OpleidingOphalenDto dto = new OpleidingOphalenDto();
+
                 // Fetch all opleidingen
-                OpleidingOphalenDto[] opleidingen = await _service.GetAllOpleidingenAsync();
+                var opleidingen = await _service.GetAllOpleidingenAsync();
 
                 // Fetch all monitors
                 OpleidingMonitorPageDto[] allMonitors = await _service.GetAllMonitorsAsync();
 
                 // TODO
-                foreach (var opleiding in opleidingen)
+                dto.OpleidingPersoonInschrijvingDto = new OpleidingPersoonInschrijvingDto();
+                dto.Opleidingen = opleidingen.ToList();
+                dto.AlleMonitors = allMonitors.Select(k => new SelectListItem
                 {
-                    opleiding.AlleMonitors = allMonitors.Select(k => new SelectListItem
-                    {
-                        Value = k.Id.ToString(),
-                        Text = $"{k.Naam} {k.Voornaam}",
-                    }).ToList();
-                }
+                    Value = k.PersoonId.ToString(),
+                    Text = $"{k.Naam} {k.Voornaam}",
+                }).ToList();
 
-                return View(opleidingen);
+                return View(dto);
             }
             catch (Exception ex)
             {
@@ -128,9 +129,9 @@ namespace ZiekenFonds.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Inschrijven(int opleidingId, string persoonId)
+        public async Task<IActionResult> Inschrijven(OpleidingPersoonInschrijvingDto dto)
         {
-            if (opleidingId <= 0 || string.IsNullOrEmpty(persoonId))
+            if (dto.OpleidingId <= 0 || string.IsNullOrEmpty(dto.PersoonId))
             {
                 TempData["ErrorMessage"] = "OpleidingId en PersoonId zijn vereist.";
                 return RedirectToAction("Index");
@@ -138,13 +139,7 @@ namespace ZiekenFonds.Web.Controllers
 
             try
             {
-                OpleidingPersoonInschrijvingDto inschrijving = new OpleidingPersoonInschrijvingDto
-                {
-                    OpleidingId = opleidingId,
-                    PersoonId = persoonId
-                };
-
-                await _service.InschrijvenAsync(inschrijving);
+                await _service.InschrijvenAsync(dto);
                 TempData["SuccessMessage"] = "Succesvol ingeschreven.";
             }
             catch (Exception ex)

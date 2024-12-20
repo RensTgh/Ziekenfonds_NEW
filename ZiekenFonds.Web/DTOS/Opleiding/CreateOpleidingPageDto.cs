@@ -28,6 +28,6 @@ namespace ZiekenFonds.Web.DTOS.Opleiding
         public List<OpleidingPersoonPageDto> OpleidingenPersonen { get; set; }
 
         // Nodig om een select te tonen waar de gebruiker uit opleidingen kan kiezen, om deze toe te voegen als vereisteOpleidingen
-        public List<OpleidingOphalenDto>? AllOpleidingen { get; set; } = new List<OpleidingOphalenDto>();
+        public List<OpleidingDto>? AllOpleidingen { get; set; } = new List<OpleidingDto>();
     }
 }

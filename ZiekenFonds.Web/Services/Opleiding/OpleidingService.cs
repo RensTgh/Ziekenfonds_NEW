@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using ZiekenFonds.Web.DTOS.Opleiding;
@@ -43,7 +42,7 @@ namespace ZiekenFonds.Web.Services.Opleiding
             }
         }
 
-        public async Task<OpleidingOphalenDto[]> GetAllOpleidingenAsync()
+        public async Task<OpleidingDto[]> GetAllOpleidingenAsync()
         {
             // Alle communicatie via API's verloopt via een Http Client
             using (HttpClient client = new HttpClient())
@@ -56,7 +55,7 @@ namespace ZiekenFonds.Web.Services.Opleiding
                     string responseData = await response.Content.ReadAsStringAsync();
 
                     // TODO
-                    OpleidingOphalenDto[] dto = JsonConvert.DeserializeObject<OpleidingOphalenDto[]>(responseData);
+                    OpleidingDto[] dto = JsonConvert.DeserializeObject<OpleidingDto[]>(responseData);
                     return dto;
                 }
 
