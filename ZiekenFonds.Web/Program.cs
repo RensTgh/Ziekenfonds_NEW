@@ -16,9 +16,9 @@ builder.Services.AddScoped<IActiviteitenService, ActiviteitenService>();
 builder.Services.AddScoped<IMonitorService, MonitorService>();
 builder.Services.AddScoped<IDeelnemerService, DeelnemerService>();
 builder.Services.AddScoped<IOpleidingServices, OpleidingService>();
+builder.Services.AddScoped<IFotoService, FotoService>();
 builder.Services.AddScoped<IReviewServices, ReviewServices>();
 builder.Services.AddScoped<IBestemmingService, BestemmingService>();
-
 
 var app = builder.Build();
 
